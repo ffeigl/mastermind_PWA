@@ -1,0 +1,23 @@
+.number{
+	font-size: 12px;
+	width: 15px;
+	height: 30px;
+}
+
+.eingabe{
+	width: 50px;
+}
+
+.column_solution{
+	height: 15px;
+}
+
+.solution{
+	height: 30px;
+	margin: 0px;
+}
+
+.solution_entry{
+	color: white;
+	font-size: 10px;
+}
