@@ -3,7 +3,7 @@ function testHandler () {
 }
 
 function addTable() {
-  var myTableDiv = document.getElementById("tabelle");
+  var myTableDiv = document.getElementById('tabelle');
 
   var table = document.createElement('TABLE');
   table.border = '1';
@@ -19,6 +19,7 @@ function addTable() {
 		var td = document.createElement('TD');
 		if(j == 0){
 			td.width = '15';
+			td.className = 'number';
 			td.appendChild(document.createTextNode("" + rows-i));
 		  
 		} else {
@@ -34,7 +35,7 @@ function addTable() {
 			  
 				for(var k = 0; k < columns; k++){
 					var solutionTd = document.createElement('TD');
-					solutionTd.width = '10';
+					solutionTd.width = '8';
 					solutionTd.height = '30';
 					solutionTr.appendChild(solutionTd);
 				}
