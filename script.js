@@ -2,6 +2,36 @@ function testHandler () {
 	console.log('test');
 }
 
+function tdClickHandler(){
+	var farbe = colorSwitch(this.style.backgroundColor);
+	this.style.backgroundColor = farbe;
+}
+
+function colorSwitch(color){
+	switch(color){
+		case 'red':
+			return 'blue';
+			break;
+		case 'blue':
+			return 'green';
+			break;
+		case 'green':
+			return 'yellow';
+			break;
+		case 'yellow':
+			return 'black';
+			break;
+		case 'black':
+			return 'grey';
+			break;
+		case 'grey':
+			return 'pink';
+			break;
+		default:
+			return 'red';
+	}
+}
+
 function addTable() {
   var myTableDiv = document.getElementById('tabelle');
 
@@ -41,9 +71,11 @@ function addTable() {
 				}
 				td.appendChild(solutionTable);
 			} else {
+				td.className = 'action';
 				td.width = '50';
 				td.height = '30';
 			}
+			
 		}
 		tr.appendChild(td);
 	}
@@ -55,3 +87,10 @@ var rows = 8;
 var columns = 4;
 
 addTable();
+
+
+var tds = document.getElementsByClassName('action');
+
+for(var i = 0; i < tds.length; i++){
+	tds[i].addEventListener('click', tdClickHandler);
+}

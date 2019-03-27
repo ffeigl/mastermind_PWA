@@ -1,5 +1,7 @@
 .number{
 	font-size: 12px;
+	text-align: center;
+	font-weight: bold;
 	width: 15px;
 	height: 30px;
 }
