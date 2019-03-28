@@ -23,7 +23,7 @@ function generateTable() {
 		if(j == 0){
 			td.width = '15';
 			td.className = 'number';
-			td.appendChild(document.createTextNode("" + rows-i));
+			td.appendChild(document.createTextNode(rows-i));
 		  
 		} else {
 			if(j == columns+1){
@@ -58,6 +58,7 @@ function generateTable() {
 
 function activateCurrentRow(){
 	deactivateAllRows();
+	rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
 	for (var i = 1; i < columns+1; i++) {
 		rowsArray[currentRow].childNodes[i].className = 'active';
 	}
@@ -67,6 +68,7 @@ function activateCurrentRow(){
 function deactivateAllRows(){
 	for (var i = 0; i < rows; i++) {
 		for (var j = 1; j < columns+1; j++) {
+			rowsArray[i].childNodes[0].style.backgroundColor = 'white';
 			rowsArray[i].childNodes[j].className = 'passive';
 		}
 	}
@@ -201,16 +203,47 @@ function colorSwitch(color){
 	}
 }
 
+function checkEmpty(){
+	for (var i = 1; i < columns+1; i++) {
+		if(rowsArray[currentRow].childNodes[i].style.backgroundColor == ''){
+			rowsArray[currentRow].childNodes[i].style.borderColor = 'red';
+			return false;
+		}
+	}
+	return true;
+}
+
+function checkDoubles(){
+	for (var i = 1; i < columns; i++) {
+		for (var j = i+1; j < columns+1; j++){
+			if(rowsArray[currentRow].childNodes[i].style.backgroundColor == rowsArray[currentRow].childNodes[j].style.backgroundColor){
+				rowsArray[currentRow].childNodes[i].style.borderColor = 'red';
+				rowsArray[currentRow].childNodes[j].style.borderColor = 'red';
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 // Eventhandler
 function tdClickHandler(){
 	this.style.backgroundColor = colorSwitch(this.style.backgroundColor);
-	console.log(this.cellIndex);
 }
 
 function btnCheckHandler(){
-	currentRow--;
-	console.log(currentRow);
-	activateCurrentRow();
+	if(currentRow > 0){
+		if(checkEmpty()){
+			if(checkDoubles()){
+				currentRow--;
+				activateCurrentRow();
+			} else {
+				console.log("DOPPELTE FELDER");
+			}
+		} else {
+			console.log("LEERE FELDER");
+		}
+	}
 }
 
 // START
