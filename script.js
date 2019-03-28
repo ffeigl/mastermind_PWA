@@ -1,10 +1,10 @@
 function init(){
-	addTable();
-	addButton();
+	generateTable();
+	generateBtnCheck();
 }
 
-function addTable() {
-  var myTableDiv = document.getElementById('tabelle');
+function generateTable() {
+  var testTable = document.getElementById('testTabelle');
 
   var table = document.createElement('TABLE');
   table.border = '1';
@@ -12,9 +12,11 @@ function addTable() {
   var tableBody = document.createElement('TBODY');
   table.appendChild(tableBody);
 
+  rowsArray = [0,0,0,0,0,0,0,0];
+  
   for (var i = 0; i < rows; i++) {
-    var tr = document.createElement('TR');
-    tableBody.appendChild(tr);
+    rowsArray[i] = document.createElement('TR');
+    tableBody.appendChild(rowsArray[i]);
 
     for (var j = 0; j < columns+2; j++) {
 		var td = document.createElement('TD');
@@ -42,19 +44,51 @@ function addTable() {
 				}
 				td.appendChild(solutionTable);
 			} else {
-				td.className = 'action';
+				td.className = 'passive';
 				td.width = '50';
 				td.height = '30';
 			}
 			
 		}
-		tr.appendChild(td);
+		rowsArray[i].appendChild(td);
 	}
   }
-  myTableDiv.appendChild(table);
+  testTable.appendChild(table);
 }
 
-function addButton(){
+function activateCurrentRow(){
+	deactivateAllRows();
+	for (var i = 1; i < columns+1; i++) {
+		rowsArray[currentRow].childNodes[i].className = 'active';
+	}
+	assignClickHandler();
+}
+
+function deactivateAllRows(){
+	for (var i = 0; i < rows; i++) {
+		for (var j = 1; j < columns+1; j++) {
+			rowsArray[i].childNodes[j].className = 'passive';
+		}
+	}
+}
+
+function assignClickHandler(){
+	// Remove Handler from passive TDs
+	var passiveTDs = document.getElementsByClassName('passive');
+	
+	for(var i = 0; i < passiveTDs.length; i++){
+		passiveTDs[i].removeEventListener('click', tdClickHandler);
+	}
+	
+	// Activate Handler on active TDs
+	var activeTDs = document.getElementsByClassName('active');
+
+	for(var i = 0; i < activeTDs.length; i++){
+		activeTDs[i].addEventListener('click', tdClickHandler);
+	}
+}
+
+function generateBtnCheck(){
 	var buttonDiv = document.getElementById('btnCheck');
 	
 	var button = document.createElement('INPUT');
@@ -170,10 +204,13 @@ function colorSwitch(color){
 // Eventhandler
 function tdClickHandler(){
 	this.style.backgroundColor = colorSwitch(this.style.backgroundColor);
+	console.log(this.cellIndex);
 }
 
 function btnCheckHandler(){
-	console.log("Click");
+	currentRow--;
+	console.log(currentRow);
+	activateCurrentRow();
 }
 
 // START
@@ -181,15 +218,14 @@ var rows = 8;
 var columns = 4;
 var colors = 6;
 
+var rowsArray;
+
 var code;
+
+var currentRow = rows-1;
 
 init();
 
 generateCode();
 codeAusgeben();
-
-var tds = document.getElementsByClassName('action');
-
-for(var i = 0; i < tds.length; i++){
-	tds[i].addEventListener('click', tdClickHandler);
-}
+activateCurrentRow();
