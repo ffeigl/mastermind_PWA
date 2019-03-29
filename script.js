@@ -4,7 +4,7 @@ function init(){
 }
 
 function generateTable() {
-  var testTable = document.getElementById('testTabelle');
+  var tableDiv = document.getElementById('table');
 
   var table = document.createElement('TABLE');
   table.border = '1';
@@ -13,6 +13,7 @@ function generateTable() {
   table.appendChild(tableBody);
 
   rowsArray = [0,0,0,0,0,0,0,0];
+  solutionArray = [0,0,0,0,0,0,0,0];
   
   for (var i = 0; i < rows; i++) {
     rowsArray[i] = document.createElement('TR');
@@ -33,14 +34,16 @@ function generateTable() {
 				var solutionTableBody = document.createElement('TBODY');
 				solutionTable.appendChild(solutionTableBody);
 			  
-				var solutionTr = document.createElement('TR');
-				solutionTableBody.appendChild(solutionTr);
+				for (var k = 0; k < columns; k++){
+					solutionArray[k] = document.createElement('TR');
+					solutionTableBody.appendChild(solutionArray[k]);
 			  
-				for(var k = 0; k < columns; k++){
-					var solutionTd = document.createElement('TD');
-					solutionTd.width = '8';
-					solutionTd.height = '30';
-					solutionTr.appendChild(solutionTd);
+					//for(var l = 0; l < columns; l++){
+						var solutionTd = document.createElement('TD');
+						solutionTd.width = '8';
+						solutionTd.height = '30';
+						solutionArray[k].appendChild(solutionTd);
+					//}
 				}
 				td.appendChild(solutionTable);
 			} else {
@@ -53,7 +56,7 @@ function generateTable() {
 		rowsArray[i].appendChild(td);
 	}
   }
-  testTable.appendChild(table);
+  tableDiv.appendChild(table);
 }
 
 function activateCurrentRow(){
@@ -204,13 +207,18 @@ function colorSwitch(color){
 }
 
 function checkEmpty(){
+	var emptyTDs = 0;
 	for (var i = 1; i < columns+1; i++) {
 		if(rowsArray[currentRow].childNodes[i].style.backgroundColor == ''){
 			rowsArray[currentRow].childNodes[i].style.borderColor = 'red';
-			return false;
+			emptyTDs++;
 		}
 	}
-	return true;
+	if(emptyTDs == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function checkDoubles(){
@@ -226,6 +234,36 @@ function checkDoubles(){
 	return true;
 }
 
+function compareWithSolution(){
+	var rightColor = 0;
+	var rightColorRightPlace = 0;
+	
+	for (var i = 0; i < code.length; i++){
+		if (rowsArray[currentRow].childNodes[i+1].style.backgroundColor == code[i]){
+			rightColorRightPlace++;
+		}
+	}
+	for (var i = 1; i < code.length+1; i++){
+		for (var j = 0; j < code.length; j++){
+			if (rowsArray[currentRow].childNodes[i].style.backgroundColor == code[j]){
+				rightColor++;
+			}
+		}
+	}
+	console.log(rightColorRightPlace);
+	console.log(rightColor);
+	
+	fillSolutionTable(rightColorRightPlace, rightColor);
+}
+
+function fillSolutionTable(rightColorRightPlace, rightColor){
+	var currentSolutionTable = rowsArray[currentRow].childNodes[5].childNodes[0].childNodes[0];
+	
+	for (var i = 0; i < columns-1; i++){
+		currentSolutionTable.childNodes[i].style.backgroundColor = 'red';
+	}
+}
+
 // Eventhandler
 function tdClickHandler(){
 	this.style.backgroundColor = colorSwitch(this.style.backgroundColor);
@@ -235,6 +273,7 @@ function btnCheckHandler(){
 	if(currentRow > 0){
 		if(checkEmpty()){
 			if(checkDoubles()){
+				compareWithSolution();
 				currentRow--;
 				activateCurrentRow();
 			} else {
@@ -252,6 +291,7 @@ var columns = 4;
 var colors = 6;
 
 var rowsArray;
+var solutionArray
 
 var code;
 
