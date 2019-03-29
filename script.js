@@ -1,3 +1,4 @@
+// Programmaufbau
 function init(){
 	generateTable();
 	generateBtnCheck();
@@ -13,7 +14,6 @@ function generateTable() {
   table.appendChild(tableBody);
 
   rowsArray = [0,0,0,0,0,0,0,0];
-  solutionArray = [0,0,0,0,0,0,0,0];
   
   for (var i = 0; i < rows; i++) {
     rowsArray[i] = document.createElement('TR');
@@ -33,64 +33,34 @@ function generateTable() {
 			  
 				var solutionTableBody = document.createElement('TBODY');
 				solutionTable.appendChild(solutionTableBody);
+				
+					solutionRow = document.createElement('TR');
+					solutionTableBody.appendChild(solutionRow);
 			  
-				for (var k = 0; k < columns; k++){
-					solutionArray[k] = document.createElement('TR');
-					solutionTableBody.appendChild(solutionArray[k]);
-			  
-					//for(var l = 0; l < columns; l++){
-						var solutionTd = document.createElement('TD');
-						solutionTd.width = '8';
-						solutionTd.height = '30';
-						solutionArray[k].appendChild(solutionTd);
-					//}
-				}
+					for(var k = 0; k < columns; k++){
+						var solutionTD = document.createElement('TD');
+						solutionTD.width = '8';
+						solutionTD.height = '30';
+						solutionTD.id = 'solution' + i + k;
+						solutionRow.appendChild(solutionTD);
+					}
 				td.appendChild(solutionTable);
 			} else {
 				td.className = 'passive';
 				td.width = '50';
 				td.height = '30';
+				td.oncontextmenu = 'return false';
 			}
 			
 		}
 		rowsArray[i].appendChild(td);
 	}
   }
+  table.addEventListener('contextmenu', function(e){
+	e.preventDefault();
+  });
+  
   tableDiv.appendChild(table);
-}
-
-function activateCurrentRow(){
-	deactivateAllRows();
-	rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
-	for (var i = 1; i < columns+1; i++) {
-		rowsArray[currentRow].childNodes[i].className = 'active';
-	}
-	assignClickHandler();
-}
-
-function deactivateAllRows(){
-	for (var i = 0; i < rows; i++) {
-		for (var j = 1; j < columns+1; j++) {
-			rowsArray[i].childNodes[0].style.backgroundColor = 'white';
-			rowsArray[i].childNodes[j].className = 'passive';
-		}
-	}
-}
-
-function assignClickHandler(){
-	// Remove Handler from passive TDs
-	var passiveTDs = document.getElementsByClassName('passive');
-	
-	for(var i = 0; i < passiveTDs.length; i++){
-		passiveTDs[i].removeEventListener('click', tdClickHandler);
-	}
-	
-	// Activate Handler on active TDs
-	var activeTDs = document.getElementsByClassName('active');
-
-	for(var i = 0; i < activeTDs.length; i++){
-		activeTDs[i].addEventListener('click', tdClickHandler);
-	}
 }
 
 function generateBtnCheck(){
@@ -171,6 +141,77 @@ function codeAusgeben(){
 	}
 }
 
+function activateCurrentRow(){
+	deactivateAllRows();
+	rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
+	for (var i = 1; i < columns+1; i++) {
+		rowsArray[currentRow].childNodes[i].className = 'active';
+	}
+	assignClickHandler();
+}
+
+function deactivateAllRows(){
+	for (var i = 0; i < rows; i++) {
+		for (var j = 1; j < columns+1; j++) {
+			rowsArray[i].childNodes[0].style.backgroundColor = 'white';
+			rowsArray[i].childNodes[j].className = 'passive';
+		}
+	}
+}
+
+function assignClickHandler(){
+	// Remove Handler from passive TDs
+	var passiveTDs = document.getElementsByClassName('passive');
+	
+	for(var i = 0; i < passiveTDs.length; i++){
+		passiveTDs[i].removeEventListener('click', tdLeftClickHandler);
+		passiveTDs[i].removeEventListener('contextmenu', tdRightClickHandler);
+	}
+	
+	// Activate Handler on active TDs
+	var activeTDs = document.getElementsByClassName('active');
+
+	for(var i = 0; i < activeTDs.length; i++){
+		activeTDs[i].addEventListener('click', tdLeftClickHandler);
+		activeTDs[i].addEventListener('contextmenu', tdRightClickHandler);
+	}
+}
+
+// Eventhandler
+function tdLeftClickHandler(){
+	this.style.backgroundColor = colorSwitch(this.style.backgroundColor);
+}
+
+function tdRightClickHandler(e){
+	this.style.backgroundColor = reverseColorSwitch(this.style.backgroundColor);
+	e.preventDefault();
+}
+
+function btnCheckHandler(){
+	if(currentRow > 0){
+		if(checkEmpty()){
+			if(checkDoubles()){
+				showErrorMessage("");
+				compareWithSolution();
+				if(rightColorRightPlace == columns){
+					deactivateAllRows();
+					rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
+					assignClickHandler();
+					alert("GEWONNEN");
+				} else {
+					currentRow--;
+					activateCurrentRow();
+				}
+			} else {
+				showErrorMessage("Keine doppelten Farben!");
+			}
+		} else {
+			showErrorMessage("Keine leeren Felder!");
+		}
+	}
+}
+
+// Methoden für Eventhandler
 function colorSwitch(color){
 	switch(color){
 		case 'red':
@@ -206,6 +247,45 @@ function colorSwitch(color){
 	}
 }
 
+function reverseColorSwitch(color){
+	switch(color){
+		case 'red':
+			if(columns == 4){
+				return 'grey';
+			}else{
+				return 'brown';
+			}
+			break;
+		case 'blue':
+			return 'red';
+			break;
+		case 'green':
+			return 'blue';
+			break;
+		case 'yellow':
+			return 'green';
+			break;
+		case 'black':
+			return 'yellow';
+			break;
+		case 'grey':
+			return 'black'
+			break;
+		case 'pink':
+			return 'grey';
+			break;
+		case 'brown':
+			return 'pink';
+			break;
+		default:
+			if(columns == 4){
+				return 'grey';
+			}else{
+				return 'brown';
+			}
+	}
+}
+
 function checkEmpty(){
 	var emptyTDs = 0;
 	for (var i = 1; i < columns+1; i++) {
@@ -236,7 +316,7 @@ function checkDoubles(){
 
 function compareWithSolution(){
 	var rightColor = 0;
-	var rightColorRightPlace = 0;
+	rightColorRightPlace = 0;
 	
 	for (var i = 0; i < code.length; i++){
 		if (rowsArray[currentRow].childNodes[i+1].style.backgroundColor == code[i]){
@@ -250,39 +330,24 @@ function compareWithSolution(){
 			}
 		}
 	}
-	console.log(rightColorRightPlace);
-	console.log(rightColor);
-	
 	fillSolutionTable(rightColorRightPlace, rightColor);
 }
 
 function fillSolutionTable(rightColorRightPlace, rightColor){
-	var currentSolutionTable = rowsArray[currentRow].childNodes[5].childNodes[0].childNodes[0];
-	
-	for (var i = 0; i < columns-1; i++){
-		currentSolutionTable.childNodes[i].style.backgroundColor = 'red';
+	for (var i = 0; i < rightColorRightPlace; i++){
+		var currentSolutionArray = document.getElementById('solution' + currentRow + i);
+		currentSolutionArray.style.backgroundColor = 'green';
+	}
+	for (var i = rightColorRightPlace; i < rightColor; i++){
+		var currentSolutionArray = document.getElementById('solution' + currentRow + i);
+		currentSolutionArray.style.backgroundColor = 'red';
 	}
 }
 
-// Eventhandler
-function tdClickHandler(){
-	this.style.backgroundColor = colorSwitch(this.style.backgroundColor);
-}
-
-function btnCheckHandler(){
-	if(currentRow > 0){
-		if(checkEmpty()){
-			if(checkDoubles()){
-				compareWithSolution();
-				currentRow--;
-				activateCurrentRow();
-			} else {
-				console.log("DOPPELTE FELDER");
-			}
-		} else {
-			console.log("LEERE FELDER");
-		}
-	}
+function showErrorMessage(errorMessage){
+	var error = document.getElementById('errorMessage');
+	error.innerHTML = errorMessage;
+	error.style.color = 'red';
 }
 
 // START
@@ -296,6 +361,8 @@ var solutionArray
 var code;
 
 var currentRow = rows-1;
+
+var rightColorRightPlace;
 
 init();
 
