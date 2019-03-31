@@ -1,8 +1,115 @@
+// **********
+// ** MENU **
+// **********
+function initMenu(){
+	generateGameModeButtons();
+	generateManualHighscoreButtons();
+	generateGameModeSelect();
+}
+
+function generateGameModeButtons(){
+	var gameModeButtonsDiv = document.getElementById('gameModeButtons');
+	
+	var btnSinglePlayer = document.createElement('INPUT');
+	btnSinglePlayer.type = 'button';
+	btnSinglePlayer.value = 'Ein Spieler';
+	//btnSinglePlayer.onclick = btnSinglePlayerHandler;
+	
+	gameModeButtons.appendChild(btnSinglePlayer);
+	
+	var btnTwoPlayer = document.createElement('INPUT');
+	btnTwoPlayer.type = 'button';
+	btnTwoPlayer.value = 'Zwei Spieler';
+	//btnTwoPlayer.onclick = btnTwoPlayerHandler;
+	
+	gameModeButtons.appendChild(btnTwoPlayer);
+}
+
+function generateManualHighscoreButtons(){
+	var manualHighscoreButtonsDiv = document.getElementById('manualHighscoreButtons');
+	
+	var btnManual = document.createElement('INPUT');
+	btnManual.type = 'button';
+	btnManual.value = 'Spielanleitung';
+	//btnManual.onclick = btnManualHandler;
+	
+	manualHighscoreButtonsDiv.appendChild(btnManual);
+	
+	var btnHighscore = document.createElement('INPUT');
+	btnHighscore.type = 'button';
+	btnHighscore.value = 'Highscore';
+	//btnHighscore.onclick = btnHighscoreHandler;
+	
+	manualHighscoreButtonsDiv.appendChild(btnHighscore);
+}
+
+function generateGameModeSelect(){
+	var gameModeSelectDiv = document.getElementById('gameModeSelect');
+	
+	var rdoNormal = document.createElement('INPUT');
+	rdoNormal.type = 'radio';
+	rdoNormal.name = 'gameModeSelecter';
+	rdoNormal.checked = 'true';
+	
+	var lblNormal = document.createElement('LABEL');
+	lblNormal.innerHTML = 'Normal';
+	
+	gameModeSelectDiv.appendChild(rdoNormal);
+	gameModeSelectDiv.appendChild(lblNormal);
+	
+	var rdoMaster = document.createElement('INPUT');
+	rdoMaster.type = 'radio';
+	rdoMaster.name = 'gameModeSelecter';
+	
+	var lblMaster = document.createElement('LABEL');
+	lblMaster.innerHTML = 'Master';
+	
+	gameModeSelectDiv.appendChild(rdoMaster);
+	gameModeSelectDiv.appendChild(lblMaster);
+	
+	generateGameModeInfo(rows, columns, colors);
+	
+}
+
+function generateGameModeInfo(rows, columns, colors){
+	var gameModeInfoDiv = document.getElementById('gameModeInfo');
+	
+	var gameModeInfo = document.createElement('LABEL');
+	
+	var text = 'Anzahl der Versuche: ' + rows + '\n' +
+	'Länge der Kombination: ' + columns + '\n' +
+	'Mögliche Farben: ' + colors;
+	
+	gameModeInfo.innerHTML = text;
+	
+	gameModeInfoDiv.appendChild(gameModeInfo);
+}
+
+// Eventhandler
+function btnSinglePlayerHandler(){
+	generateGameModeSelect();
+	generateGameStartButton();
+}
+
+function btnTwoPlayerHandler(){
+}
+
+function btnManualHandler(){
+}
+
+function btnHighscoreHandler(){
+}
+
+// **********
+// ** GAME **
+// **********
+
 // Programmaufbau
-function init(){
+function initGame(){
 	generateTable();
 	generateBtnCheck();
 }
+//gameDiv.style.display = 'block/none';
 
 function generateTable() {
   var tableDiv = document.getElementById('table');
@@ -230,7 +337,7 @@ function colorSwitch(color){
 			return 'grey';
 			break;
 		case 'grey':
-			if(columns == 4){
+			if(colors == 6){
 				return 'red';
 			}else{
 				return 'pink';
@@ -250,7 +357,7 @@ function colorSwitch(color){
 function reverseColorSwitch(color){
 	switch(color){
 		case 'red':
-			if(columns == 4){
+			if(colors == 6){
 				return 'grey';
 			}else{
 				return 'brown';
@@ -278,7 +385,7 @@ function reverseColorSwitch(color){
 			return 'pink';
 			break;
 		default:
-			if(columns == 4){
+			if(colors == 6){
 				return 'grey';
 			}else{
 				return 'brown';
@@ -364,7 +471,8 @@ var currentRow = rows-1;
 
 var rightColorRightPlace;
 
-init();
+initMenu();
+initGame();
 
 generateCode();
 codeAusgeben();

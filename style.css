@@ -23,3 +23,8 @@
 	color: white;
 	font-size: 10px;
 }
+
+.disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+}
