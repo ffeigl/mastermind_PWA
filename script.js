@@ -12,32 +12,30 @@ function generateGameModeButtons(){
 	btnSinglePlayer.value = 'Ein Spieler';
 	btnSinglePlayer.onclick = btnSinglePlayerHandler;
 	
-	gameModeButtonsDiv.appendChild(btnSinglePlayer);
+	divGameModeButtons.appendChild(btnSinglePlayer);
 	
 	var btnTwoPlayer = document.createElement('INPUT');
 	btnTwoPlayer.type = 'button';
 	btnTwoPlayer.value = 'Zwei Spieler';
 	btnTwoPlayer.onclick = btnTwoPlayerHandler;
 	
-	gameModeButtonsDiv.appendChild(btnTwoPlayer);
+	divGameModeButtons.appendChild(btnTwoPlayer);
 }
 
 function generateManualHighscoreButtons(){
-	var manualHighscoreButtonsDiv = document.getElementById('manualHighscoreButtons');
-	
 	var btnManual = document.createElement('INPUT');
 	btnManual.type = 'button';
 	btnManual.value = 'Spielanleitung';
 	//btnManual.onclick = btnManualHandler;
 	
-	manualHighscoreButtonsDiv.appendChild(btnManual);
+	divManualHighscoreButtons.appendChild(btnManual);
 	
 	var btnHighscore = document.createElement('INPUT');
 	btnHighscore.type = 'button';
 	btnHighscore.value = 'Highscore';
 	//btnHighscore.onclick = btnHighscoreHandler;
 	
-	manualHighscoreButtonsDiv.appendChild(btnHighscore);
+	divManualHighscoreButtons.appendChild(btnHighscore);
 }
 
 function generateGameModeSelect(){
@@ -54,8 +52,8 @@ function generateGameModeSelect(){
 	var lblNormal = document.createElement('LABEL');
 	lblNormal.innerHTML = 'Normal';
 	
-	gameModeSelectDiv.appendChild(rdoNormal);
-	gameModeSelectDiv.appendChild(lblNormal);
+	divGameModeSelect.appendChild(rdoNormal);
+	divGameModeSelect.appendChild(lblNormal);
 	
 	var rdoMaster = document.createElement('INPUT');
 	rdoMaster.type = 'radio';
@@ -65,8 +63,8 @@ function generateGameModeSelect(){
 	var lblMaster = document.createElement('LABEL');
 	lblMaster.innerHTML = 'Master';
 	
-	gameModeSelectDiv.appendChild(rdoMaster);
-	gameModeSelectDiv.appendChild(lblMaster);
+	divGameModeSelect.appendChild(rdoMaster);
+	divGameModeSelect.appendChild(lblMaster);
 	
 	generateGameModeInfo();
 }
@@ -80,7 +78,7 @@ function generateGameModeInfo(){
 	
 	gameModeInfo.innerHTML = gameModeInfoText;
 	
-	gameModeInfoDiv.appendChild(gameModeInfo);
+	divGameModeInfo.appendChild(gameModeInfo);
 }
 
 function generateRoundsSelect(){
@@ -88,7 +86,7 @@ function generateRoundsSelect(){
 	
 	test.innerHTML = 'Das ist ein Test';
 	
-	roundsSelectDiv.appendChild(test);
+	divRoundsSelect.appendChild(test);
 }
 
 function generateGameStartButton(){
@@ -98,37 +96,37 @@ function generateGameStartButton(){
 	btnGameStart.value = 'Start';
 	btnGameStart.onclick = btnGameStartHandler;
 	
-	gameStartButtonDiv.appendChild(btnGameStart);
+	divGameStartButton.appendChild(btnGameStart);
 }
 
 // Eventhandler
 function btnSinglePlayerHandler(){
-	if(gameModeSelectDiv.firstChild){
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
-		gameStartButtonDiv.removeChild(gameStartButtonDiv.firstChild);
+	if(divGameModeSelect.firstChild){
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeInfo.removeChild(divGameModeInfo.firstChild);
+		divGameStartButton.removeChild(divGameStartButton.firstChild);
 	}
-	if(roundsSelectDiv.firstChild){
-		roundsSelectDiv.removeChild(roundsSelectDiv.firstChild);
+	if(divRoundsSelect.firstChild){
+		divRoundsSelect.removeChild(divRoundsSelect.firstChild);
 	}
 	generateGameModeSelect();
 	generateGameStartButton();
 }
 
 function btnTwoPlayerHandler(){
-	if(gameModeSelectDiv.firstChild){
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
-		gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
-		gameStartButtonDiv.removeChild(gameStartButtonDiv.firstChild);
+	if(divGameModeSelect.firstChild){
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+		divGameModeInfo.removeChild(divGameModeInfo.firstChild);
+		divGameStartButton.removeChild(divGameStartButton.firstChild);
 	}
-	if(roundsSelectDiv.firstChild){
-		roundsSelectDiv.removeChild(roundsSelectDiv.firstChild);
+	if(divRoundsSelect.firstChild){
+		divRoundsSelect.removeChild(divRoundsSelect.firstChild);
 	}
 	generateGameModeSelect();
 	generateRoundsSelect();
@@ -139,7 +137,7 @@ function rdoNormalHandler(){
 	rows = 8;
 	columns = 4;
 	colors = 6;
-	gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
+	divGameModeInfo.removeChild(divGameModeInfo.firstChild);
 	
 	generateGameModeInfo();
 }
@@ -148,7 +146,7 @@ function rdoMasterHandler(){
 	rows = 10;
 	columns = 5;
 	colors = 8;
-	gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
+	divGameModeInfo.removeChild(divGameModeInfo.firstChild);
 	
 	generateGameModeInfo();
 }
@@ -162,8 +160,15 @@ function btnHighscoreHandler(){
 }
 
 function btnGameStartHandler(){
+	
+	var anzahl = divMenu.childNodes;
+	
+	while(divMenu.firstChild){
+		divMenu.removeChild(divMenu.firstChild);
+	}
+	
 	initGame();
-	menuDiv.style.display = 'none';
+	//menuDiv.style.display = 'none';
 }
 
 // **********
@@ -530,13 +535,15 @@ function showErrorMessage(errorMessage){
 }
 
 // START
-var menuDiv = document.getElementById('menu');
-var gameModeButtonsDiv = document.getElementById('gameModeButtons');
-var gameModeSelectDiv = document.getElementById('gameModeSelect');
-var roundsSelectDiv = document.getElementById('roundsSelect');
-var gameModeInfoDiv = document.getElementById('gameModeInfo');
+var divMenu = document.getElementById('menu');
+var divGameModeButtons = document.getElementById('gameModeButtons');
+var divGameModeSelect = document.getElementById('gameModeSelect');
+var divGameModeInfo = document.getElementById('gameModeInfo');
+var divRoundsSelect = document.getElementById('roundsSelect');
 
-var gameStartButtonDiv = document.getElementById('gameStartButton');
+var divGameStartButton = document.getElementById('gameStartButton');
+
+var divManualHighscoreButtons = document.getElementById('manualHighscoreButtons');
 
 
 var rows;
