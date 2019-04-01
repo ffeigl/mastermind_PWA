@@ -4,25 +4,22 @@
 function initMenu(){
 	generateGameModeButtons();
 	generateManualHighscoreButtons();
-	generateGameModeSelect();
 }
 
-function generateGameModeButtons(){
-	var gameModeButtonsDiv = document.getElementById('gameModeButtons');
-	
+function generateGameModeButtons(){	
 	var btnSinglePlayer = document.createElement('INPUT');
 	btnSinglePlayer.type = 'button';
 	btnSinglePlayer.value = 'Ein Spieler';
-	//btnSinglePlayer.onclick = btnSinglePlayerHandler;
+	btnSinglePlayer.onclick = btnSinglePlayerHandler;
 	
-	gameModeButtons.appendChild(btnSinglePlayer);
+	gameModeButtonsDiv.appendChild(btnSinglePlayer);
 	
 	var btnTwoPlayer = document.createElement('INPUT');
 	btnTwoPlayer.type = 'button';
 	btnTwoPlayer.value = 'Zwei Spieler';
-	//btnTwoPlayer.onclick = btnTwoPlayerHandler;
+	btnTwoPlayer.onclick = btnTwoPlayerHandler;
 	
-	gameModeButtons.appendChild(btnTwoPlayer);
+	gameModeButtonsDiv.appendChild(btnTwoPlayer);
 }
 
 function generateManualHighscoreButtons(){
@@ -44,11 +41,14 @@ function generateManualHighscoreButtons(){
 }
 
 function generateGameModeSelect(){
-	var gameModeSelectDiv = document.getElementById('gameModeSelect');
+	rows = 8;
+	columns = 4;
+	colors = 6;
 	
 	var rdoNormal = document.createElement('INPUT');
 	rdoNormal.type = 'radio';
 	rdoNormal.name = 'gameModeSelecter';
+	rdoNormal.onclick = rdoNormalHandler;
 	rdoNormal.checked = 'true';
 	
 	var lblNormal = document.createElement('LABEL');
@@ -60,6 +60,7 @@ function generateGameModeSelect(){
 	var rdoMaster = document.createElement('INPUT');
 	rdoMaster.type = 'radio';
 	rdoMaster.name = 'gameModeSelecter';
+	rdoMaster.onclick = rdoMasterHandler;
 	
 	var lblMaster = document.createElement('LABEL');
 	lblMaster.innerHTML = 'Master';
@@ -67,37 +68,102 @@ function generateGameModeSelect(){
 	gameModeSelectDiv.appendChild(rdoMaster);
 	gameModeSelectDiv.appendChild(lblMaster);
 	
-	generateGameModeInfo(rows, columns, colors);
-	
+	generateGameModeInfo();
 }
 
-function generateGameModeInfo(rows, columns, colors){
-	var gameModeInfoDiv = document.getElementById('gameModeInfo');
-	
+function generateGameModeInfo(){
 	var gameModeInfo = document.createElement('LABEL');
 	
-	var text = 'Anzahl der Versuche: ' + rows + '\n' +
-	'Länge der Kombination: ' + columns + '\n' +
+	var gameModeInfoText = 'Anzahl der Versuche: ' + rows + '<br />' +
+	'Länge der Kombination: ' + columns + '<br />' +
 	'Mögliche Farben: ' + colors;
 	
-	gameModeInfo.innerHTML = text;
+	gameModeInfo.innerHTML = gameModeInfoText;
 	
 	gameModeInfoDiv.appendChild(gameModeInfo);
 }
 
+function generateRoundsSelect(){
+	var test = document.createElement('LABEL');
+	
+	test.innerHTML = 'Das ist ein Test';
+	
+	roundsSelectDiv.appendChild(test);
+}
+
+function generateGameStartButton(){
+	var btnGameStart = document.createElement('INPUT');
+	
+	btnGameStart.type = 'button';
+	btnGameStart.value = 'Start';
+	btnGameStart.onclick = btnGameStartHandler;
+	
+	gameStartButtonDiv.appendChild(btnGameStart);
+}
+
 // Eventhandler
 function btnSinglePlayerHandler(){
+	if(gameModeSelectDiv.firstChild){
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
+		gameStartButtonDiv.removeChild(gameStartButtonDiv.firstChild);
+	}
+	if(roundsSelectDiv.firstChild){
+		roundsSelectDiv.removeChild(roundsSelectDiv.firstChild);
+	}
 	generateGameModeSelect();
 	generateGameStartButton();
 }
 
 function btnTwoPlayerHandler(){
+	if(gameModeSelectDiv.firstChild){
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeSelectDiv.removeChild(gameModeSelectDiv.firstChild);
+		gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
+		gameStartButtonDiv.removeChild(gameStartButtonDiv.firstChild);
+	}
+	if(roundsSelectDiv.firstChild){
+		roundsSelectDiv.removeChild(roundsSelectDiv.firstChild);
+	}
+	generateGameModeSelect();
+	generateRoundsSelect();
+	generateGameStartButton();
+}
+
+function rdoNormalHandler(){
+	rows = 8;
+	columns = 4;
+	colors = 6;
+	gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
+	
+	generateGameModeInfo();
+}
+
+function rdoMasterHandler(){
+	rows = 10;
+	columns = 5;
+	colors = 8;
+	gameModeInfoDiv.removeChild(gameModeInfoDiv.firstChild);
+	
+	generateGameModeInfo();
 }
 
 function btnManualHandler(){
+	
 }
 
 function btnHighscoreHandler(){
+	
+}
+
+function btnGameStartHandler(){
+	initGame();
+	menuDiv.style.display = 'none';
 }
 
 // **********
@@ -108,6 +174,12 @@ function btnHighscoreHandler(){
 function initGame(){
 	generateTable();
 	generateBtnCheck();
+	
+	currentRow = rows-1;
+	
+	generateCode();
+	codeAusgeben();
+	activateCurrentRow();
 }
 //gameDiv.style.display = 'block/none';
 
@@ -458,22 +530,27 @@ function showErrorMessage(errorMessage){
 }
 
 // START
-var rows = 8;
-var columns = 4;
-var colors = 6;
+var menuDiv = document.getElementById('menu');
+var gameModeButtonsDiv = document.getElementById('gameModeButtons');
+var gameModeSelectDiv = document.getElementById('gameModeSelect');
+var roundsSelectDiv = document.getElementById('roundsSelect');
+var gameModeInfoDiv = document.getElementById('gameModeInfo');
+
+var gameStartButtonDiv = document.getElementById('gameStartButton');
+
+
+var rows;
+var columns;
+var colors;
 
 var rowsArray;
-var solutionArray
+var solutionArray;
 
 var code;
 
-var currentRow = rows-1;
+var currentRow;
 
 var rightColorRightPlace;
 
 initMenu();
-initGame();
-
-generateCode();
-codeAusgeben();
-activateCurrentRow();
+//initGame();
