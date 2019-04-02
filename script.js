@@ -146,7 +146,7 @@ function btnHighscoreHandler(){
 }
 
 function btnGameStartHandler(){
-	removeDivMenu();
+	removeMenu();
 	initGame();
 }
 
@@ -302,6 +302,20 @@ function generateErrorMessage(){
 	divTable.appendChild(error);
 }
 
+function generateSolution(){
+	var solutionRow = document.createElement('TR');
+	
+	for (var i = 0; i < columns; i++){
+		var solutionTD = document.createElement('TD');
+		solutionTD.style.background = code[i];
+		solutionTD.width = '53.6';
+		solutionTD.height = '42.8';
+		solutionRow.appendChild(solutionTD);
+	}
+	divSolution.appendChild(solutionRow);
+	
+}
+
 function generateCode(){
 	if(columns == 4){
 		code = [0,0,0,0];
@@ -443,6 +457,7 @@ function btnCheckHandler(){
 				deactivateAllRows();
 				rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
 				assignClickHandler();
+				generateSolution();
 				stopTimer();
 				customAlert.render();
 			} else {
@@ -450,7 +465,9 @@ function btnCheckHandler(){
 					currentRow--;
 					activateCurrentRow();
 				} else {
-					alert("Verloren");
+					generateSolution();
+					stopTimer();
+					customAlert.render();
 				}
 			}
 		} else {
@@ -608,8 +625,8 @@ function CustomAlert(){
 		
 		divDialogOverlay.style.display = 'block';
 		divDialogOverlay.style.height = winH+'px';
-		divDialogBox.style.left = (winW/2) - (550 * .5)+'px';
-		divDialogBox.style.top = '100px';
+		divDialogBox.style.left = (winW/2) - (300 * .5)+'px';
+		divDialogBox.style.top = '150px';
 		divDialogBox.style.display = 'block';
 		
 		var btnNewNext = document.createElement('INPUT');
@@ -624,13 +641,16 @@ function CustomAlert(){
 		
 		var triesNeeded = rows-currentRow;
 		
+		var dialogBodyBoxText = '<b>Benötigte Zeit:</b> <br \>' + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+		
 		if(rightColorRightPlace == columns){
 			dialogBoxHead.innerHTML = 'Gewonnen';
+			dialogBodyBoxText = dialogBodyBoxText + '<br \> <b>Benötigte Versuche:</b> <br \>' + triesNeeded;
 		} else {
 			dialogBoxHead.innerHTML = 'Verloren';
 		}
-		dialogBoxBody.innerHTML = 'Gebrauchte Zeit: <br \>' + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds) + 
-		'<br \> Anzahl der Versuche: <br \>' + triesNeeded;
+		
+		dialogBoxBody.innerHTML = dialogBodyBoxText;
 		
 		dialogBoxFoot.appendChild(btnNewNext);
 		dialogBoxFoot.appendChild(btnMenu);
@@ -648,8 +668,9 @@ function CustomAlert(){
 		initMenu();
 	}
 }
+
 // REMOVES
-function removeDivMenu(){
+function removeMenu(){
 	while(divGameModeButtons.firstChild){
 		divGameModeButtons.removeChild(divGameModeButtons.firstChild);
 	}
@@ -671,6 +692,10 @@ function removeDivMenu(){
 }
 
 function removeGame(){
+	while(divSolution.firstChild){
+		divSolution.removeChild(divSolution.firstChild);
+	}
+	
 	while(divTable.firstChild){
 		divTable.removeChild(divTable.firstChild);
 	}
@@ -705,6 +730,7 @@ var divGameStartButton = document.getElementById('gameStartButton');
 var divManualHighscoreButtons = document.getElementById('manualHighscoreButtons');;
 
 var divGame = document.getElementById('game');
+var divSolution = document.getElementById('solution');
 var divTable = document.getElementById('table');
 var divColorsInfo = document.getElementById('colorsInfo');
 var divButton = document.getElementById('btnCheck');
