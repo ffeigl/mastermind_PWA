@@ -4,6 +4,7 @@
 
 // Initialize
 function initMenu(){
+	
 	generateGameModeButtons();
 	generateManualHighscoreButtons();
 }
@@ -98,27 +99,21 @@ function generateGameStartButton(){
 
 // Eventhandler
 function btnSinglePlayerHandler(){
-	if(divGameModeSelect.firstChild){
-		removeDivGameModeSelect();
-		removeDivGameModeInfo();
-		removeDivGameStartButton();
-	}
-	if(divRoundsSelect.firstChild){
-		removeDivRoundsSelect();
-	}
+	removeGameModeSelect();
+	removeGameModeInfo();
+	removeRoundsSelect();
+	removeGameStartButton();
+	
 	generateGameModeSelect();
 	generateGameStartButton();
 }
 
 function btnTwoPlayerHandler(){
-	if(divGameModeSelect.firstChild){
-		removeDivGameModeSelect();
-		removeDivGameModeInfo();
-		removeDivGameStartButton();
-	}
-	if(divRoundsSelect.firstChild){
-		removeDivRoundsSelect();
-	}
+	removeGameModeSelect();
+	removeGameModeInfo();
+	removeRoundsSelect();
+	removeGameStartButton();
+	
 	generateGameModeSelect();
 	generateRoundsSelect();
 	generateGameStartButton();
@@ -129,7 +124,7 @@ function rdoNormalHandler(){
 	columns = 4;
 	colors = 6;
 	
-	removeDivGameModeInfo();
+	removeGameModeInfo();
 	generateGameModeInfo();
 }
 
@@ -138,7 +133,7 @@ function rdoMasterHandler(){
 	columns = 5;
 	colors = 8;
 	
-	removeDivGameModeInfo();
+	removeGameModeInfo();
 	generateGameModeInfo();
 }
 
@@ -156,28 +151,28 @@ function btnGameStartHandler(){
 }
 
 // Methoden für Eventhandler
-function removeDivMenu(){
-	while(divMenu.firstChild){
-		divMenu.removeChild(divMenu.firstChild);
-	}
-}
-
-function removeDivGameModeSelect(){
+function removeGameModeSelect(){
 	while(divGameModeSelect.firstChild){
 		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
 	}
 }
 
-function removeDivGameModeInfo(){
-	divGameModeInfo.removeChild(divGameModeInfo.firstChild);
+function removeGameModeInfo(){
+	while(divGameModeInfo.firstChild){
+		divGameModeInfo.removeChild(divGameModeInfo.firstChild);
+	}
 }
 
-function removeDivRoundsSelect(){
-	divRoundsSelect.removeChild(divRoundsSelect.firstChild);
+function removeRoundsSelect(){
+	while(divRoundsSelect.firstChild){
+		divRoundsSelect.removeChild(divRoundsSelect.firstChild);
+	}
 }
 
-function removeDivGameStartButton(){
-	divGameStartButton.removeChild(divGameStartButton.firstChild);
+function removeGameStartButton(){
+	while(divGameStartButton.firstChild){
+		divGameStartButton.removeChild(divGameStartButton.firstChild);
+	}
 }
 
 // **********
@@ -440,27 +435,29 @@ function tdRightClickHandler(e){
 }
 
 function btnCheckHandler(){
-	if(currentRow > 0){
-		if(checkEmpty()){
-			if(checkDoubles()){
+	if(checkEmpty()){
+		if(checkDoubles()){
 				showErrorMessage("");
-				compareWithSolution();
-				if(rightColorRightPlace == columns){
-					deactivateAllRows();
-					rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
-					assignClickHandler();
-					stopTimer();
-					alert("GEWONNEN");
-				} else {
+			compareWithSolution();
+			if(rightColorRightPlace == columns){
+				deactivateAllRows();
+				rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
+				assignClickHandler();
+				stopTimer();
+				customAlert.render();
+			} else {
+				if(currentRow > 0){
 					currentRow--;
 					activateCurrentRow();
+				} else {
+					alert("Verloren");
 				}
-			} else {
-				showErrorMessage("Keine doppelten Farben!");
 			}
 		} else {
-			showErrorMessage("Keine leeren Felder!");
+			showErrorMessage("Keine doppelten Farben!");
 		}
+	} else {
+		showErrorMessage("Keine leeren Felder!");
 	}
 }
 
@@ -601,14 +598,109 @@ function showErrorMessage(errorMessage){
 	error.innerHTML = errorMessage;
 }
 
+// **********
+// * DIALOG *
+// **********
+function CustomAlert(){
+	this.render = function(){
+		var winW = window.innerWidth;
+		var winH = window.innerHeight;
+		
+		divDialogOverlay.style.display = 'block';
+		divDialogOverlay.style.height = winH+'px';
+		divDialogBox.style.left = (winW/2) - (550 * .5)+'px';
+		divDialogBox.style.top = '100px';
+		divDialogBox.style.display = 'block';
+		
+		var btnNewNext = document.createElement('INPUT');
+		btnNewNext.type = 'button';
+		btnNewNext.value = 'Neues Spiel';
+		btnNewNext.onclick = customAlert.btnNewNextHandler;
+		
+		var btnMenu = document.createElement('INPUT');
+		btnMenu.type = 'button';
+		btnMenu.value = 'Menü';
+		btnMenu.onclick = customAlert.btnMenuHandler;
+		
+		var triesNeeded = rows-currentRow;
+		
+		if(rightColorRightPlace == columns){
+			dialogBoxHead.innerHTML = 'Gewonnen';
+		} else {
+			dialogBoxHead.innerHTML = 'Verloren';
+		}
+		dialogBoxBody.innerHTML = 'Gebrauchte Zeit: ' + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds) + 
+		'<br \> Anzahl der Versuche: ' + triesNeeded;
+		
+		dialogBoxFoot.appendChild(btnNewNext);
+		dialogBoxFoot.appendChild(btnMenu);
+	}
+	
+	this.btnNewNextHandler = function(){
+		console.log('Neues Spiel');
+	}
+	
+	this.btnMenuHandler = function(){
+		removeGame();
+		removeDialog();
+		initMenu();
+	}
+}
+// REMOVES
+function removeDivMenu(){
+	while(divGameModeButtons.firstChild){
+		divGameModeButtons.removeChild(divGameModeButtons.firstChild);
+	}
+	while(divGameModeSelect.firstChild){
+		divGameModeSelect.removeChild(divGameModeSelect.firstChild);
+	}
+	while(divGameModeInfo.firstChild){
+		divGameModeInfo.removeChild(divGameModeInfo.firstChild);
+	}
+	while(divRoundsSelect.firstChild){
+		divRoundsSelect.removeChild(divRoundsSelect.firstChild);
+	}
+	while(divGameStartButton.firstChild){
+		divGameStartButton.removeChild(divGameStartButton.firstChild);
+	}
+	while(divManualHighscoreButtons.firstChild){
+		divManualHighscoreButtons.removeChild(divManualHighscoreButtons.firstChild);
+	}
+}
+
+function removeGame(){
+	while(divTable.firstChild){
+		divTable.removeChild(divTable.firstChild);
+	}
+	while(divColorsInfo.firstChild){
+		divColorsInfo.removeChild(divColorsInfo.firstChild);
+	}
+}
+
+function removeDialog(){
+	divDialogOverlay.style.display = 'none';
+	divDialogBox.style.display = 'none';
+	while(divDialogBoxHead.firstChild){
+		divDialogBoxHead.removeChild(divDialogBoxHead.firstChild);
+	}
+	while(divDialogBoxBody.firstChild){
+		divDialogBoxBody.removeChild(divDialogBoxBody.firstChild);
+	}
+	while(divDialogBoxFoot.firstChild){
+		divDialogBoxFoot.removeChild(divDialogBoxFoot.firstChild);
+	}
+}
+
 // START
+var divWindow = document.getElementById('window');
+
 var divMenu = document.getElementById('menu');
 var divGameModeButtons = document.getElementById('gameModeButtons');
 var divGameModeSelect = document.getElementById('gameModeSelect');
 var divGameModeInfo = document.getElementById('gameModeInfo');
 var divRoundsSelect = document.getElementById('roundsSelect');
 var divGameStartButton = document.getElementById('gameStartButton');
-var divManualHighscoreButtons = document.getElementById('manualHighscoreButtons');
+var divManualHighscoreButtons = document.getElementById('manualHighscoreButtons');;
 
 var divGame = document.getElementById('game');
 var divTable = document.getElementById('table');
@@ -617,6 +709,13 @@ var divButton = document.getElementById('btnCheck');
 var error = document.getElementById('errorMessage');
 
 var lblTimer = document.createElement('LABEL');
+
+var divDialogOverlay = document.getElementById('dialogOverlay');
+var divDialogBox = document.getElementById('dialogBox');
+var divDialogBoxHead = document.getElementById('dialogBoxHead');
+var divDialogBoxBody = document.getElementById('dialogBoxBody');
+var divDialogBoxFoot = document.getElementById('dialogBoxFoot');
+
 var seconds;
 var minutes;
 var timer;
@@ -634,6 +733,8 @@ var code;
 var currentRow;
 
 var rightColorRightPlace;
+
+var customAlert = new CustomAlert();
 
 initMenu();
 //initGame();
