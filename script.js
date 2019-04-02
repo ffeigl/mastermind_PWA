@@ -187,18 +187,22 @@ function removeDivGameStartButton(){
 // Initialize
 function initGame(){
 	generateTable();
-	generateColorsInfo();
 	generateBtnCheck();
+	generateErrorMessage();
+	generateColorsInfo();
 	
 	currentRow = rows-1;
 	
 	generateCode();
 	codeAusgeben();
 	activateCurrentRow();
+	
+	startTimer();
 }
 
 function generateTable() {
   var table = document.createElement('TABLE');
+  divTable.className = 'table';
   table.border = '1';
 
   var tableBody = document.createElement('TBODY');
@@ -255,12 +259,13 @@ function generateTable() {
   table.addEventListener('contextmenu', function(e){
 	e.preventDefault();
   });
-  table.style.display = 'inline-box';
   divTable.appendChild(table);
 }
 
 function generateColorsInfo(){
 	var tblColorsInfo = document.createElement('TABLE');
+	
+	tblColorsInfo.className = 'colorsInfo';
 	
 	var tblBodyColorsInfo = document.createElement('TBODY');
 	tblColorsInfo.appendChild(tblBodyColorsInfo);
@@ -273,24 +278,33 @@ function generateColorsInfo(){
 		
 		colorsTR.appendChild(colorsTD);
 		colorsTD.style.backgroundColor = assignColor(i);
-		colorsTD.width = '15';
-		colorsTD.height = '15';
+		colorsTD.width = '45';
+		colorsTD.height = '45';
 		tblBodyColorsInfo.appendChild(colorsTR);
 	}
 	
 	tblColorsInfo.style.display = 'inline-box';
-	divTable.appendChild(tblColorsInfo);
+	divColorsInfo.appendChild(tblColorsInfo);
 }
 
 function generateBtnCheck(){
-	var divButton = document.getElementById('btnCheck');
-	
 	var button = document.createElement('INPUT');
 	button.type = 'button';
 	button.value = 'Check!';
 	button.onclick = btnCheckHandler;
 	
-	divButton.appendChild(button);
+	divTable.appendChild(button);
+	
+	lblTimer.innerHTML = '00:00';
+	
+	divTable.appendChild(lblTimer);
+}
+
+function generateErrorMessage(){
+	error.innerHTML = "";
+	error.style.color = 'red';
+	
+	divTable.appendChild(error);
 }
 
 function generateCode(){
@@ -396,6 +410,25 @@ function assignClickHandler(){
 	}
 }
 
+function startTimer(){
+	seconds = 0;
+	minutes = 0;
+	timer = setInterval(roundTimer, 1000);
+}
+
+function roundTimer(){
+	seconds++;
+	if(seconds >=60){
+		seconds = 0;
+		minutes++;
+	}
+	lblTimer.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+}
+
+function stopTimer(){
+	clearInterval(timer);
+}
+
 // Eventhandler
 function tdLeftClickHandler(){
 	this.style.backgroundColor = colorSwitch(this.style.backgroundColor);
@@ -416,6 +449,7 @@ function btnCheckHandler(){
 					deactivateAllRows();
 					rowsArray[currentRow].childNodes[0].style.backgroundColor = 'green';
 					assignClickHandler();
+					stopTimer();
 					alert("GEWONNEN");
 				} else {
 					currentRow--;
@@ -564,9 +598,7 @@ function fillSolutionTable(rightColorRightPlace, rightColor){
 }
 
 function showErrorMessage(errorMessage){
-	var error = document.getElementById('errorMessage');
 	error.innerHTML = errorMessage;
-	error.style.color = 'red';
 }
 
 // START
@@ -580,6 +612,14 @@ var divManualHighscoreButtons = document.getElementById('manualHighscoreButtons'
 
 var divGame = document.getElementById('game');
 var divTable = document.getElementById('table');
+var divColorsInfo = document.getElementById('colorsInfo');
+var divButton = document.getElementById('btnCheck');
+var error = document.getElementById('errorMessage');
+
+var lblTimer = document.createElement('LABEL');
+var seconds;
+var minutes;
+var timer;
 
 
 var rows;
