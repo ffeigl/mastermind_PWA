@@ -629,20 +629,22 @@ function CustomAlert(){
 		} else {
 			dialogBoxHead.innerHTML = 'Verloren';
 		}
-		dialogBoxBody.innerHTML = 'Gebrauchte Zeit: ' + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds) + 
-		'<br \> Anzahl der Versuche: ' + triesNeeded;
+		dialogBoxBody.innerHTML = 'Gebrauchte Zeit: <br \>' + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds) + 
+		'<br \> Anzahl der Versuche: <br \>' + triesNeeded;
 		
 		dialogBoxFoot.appendChild(btnNewNext);
 		dialogBoxFoot.appendChild(btnMenu);
 	}
 	
 	this.btnNewNextHandler = function(){
-		console.log('Neues Spiel');
+		removeDialog();
+		removeGame();
+		initGame();
 	}
 	
 	this.btnMenuHandler = function(){
-		removeGame();
 		removeDialog();
+		removeGame();
 		initMenu();
 	}
 }

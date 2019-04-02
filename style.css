@@ -47,32 +47,30 @@
 #dialogBox{
 	display: none;
 	position: fixed;
-	background: #000;
+	background: gray;
 	border-radius: 7px;
-	width: 550px;
+	width: 300px;
 	z-index: 10;
 }
 
 #dialogBox > div{
-	background: #FFF;
 	margin: 8px;
 }
 
 #dialogBox > div > #dialogBoxHead{
-	background: #666;
 	font-size: 19px;
 	padding: 10px;
-	color: #CCC;
+	text-align: center;
 }
 
 #dialogBox > div > #dialogBoxBody{
-	background: #333;
 	padding: 20px;
-	color: #FFF;
+	background: white;
+	text-align: center;
 }
 
 #dialogBox > div > #dialogBoxFoot{
-	background: #666;
 	padding: 10px;
 	text-align: right;
+	background: white;
 }
