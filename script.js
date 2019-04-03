@@ -857,15 +857,45 @@ function Dialog(){
 }
 
 function calculateAverage(){
+	var actualMinutes = 0;
+	var additionalSeconds = 0;
+	
 	// Player 1
+	triesPlayer1 = triesPlayer1/(numberOfGames/2);
+	triesPlayer1 = triesPlayer1.toFixed(1);
+	
 	secondsPlayer1 = secondsPlayer1/(numberOfGames/2);
 	minutesPlayer1 = minutesPlayer1/(numberOfGames/2);
-	triesPlayer1 = triesPlayer1/(numberOfGames/2);
+	
+	actualMinutes = Math.floor(minutesPlayer1);
+	additionalSeconds = minutesPlayer1 - actualMinutes;
+	minutesPlayer1 = actualMinutes;
+	additionalSeconds = additionalSeconds * 60;
+	secondsPlayer1 = secondsPlayer1 + additionalSeconds;
+	if(secondsPlayer1 >= 60){
+		secondsPlayer1 = secondsPlayer1 - 60;
+		minutesPlayer1++;
+	}
+	secondsPlayer1 = Math.round(secondsPlayer1);
+	
 	
 	// Player 2
+	triesPlayer2 = triesPlayer2/(numberOfGames/2);
+	triesPlayer2 = triesPlayer2.toFixed(1);
+	
 	secondsPlayer2 = secondsPlayer2/(numberOfGames/2);
 	minutesPlayer2 = minutesPlayer2/(numberOfGames/2);
-	triesPlayer2 = triesPlayer2/(numberOfGames/2);
+	
+	actualMinutes = Math.floor(minutesPlayer2);
+	additionalSeconds = minutesPlayer2 - actualMinutes;
+	minutesPlayer2 = actualMinutes;
+	additionalSeconds = additionalSeconds * 60;
+	secondsPlayer2 = secondsPlayer2 + additionalSeconds;
+	if(secondsPlayer2 >= 60){
+		secondsPlayer2 = secondsPlayer2 - 60;
+		minutesPlayer2++;
+	}
+	secondsPlayer2 = Math.round(secondsPlayer2);
 }
 
 // ***********
