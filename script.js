@@ -209,18 +209,20 @@ function initCodeSelect(){
 }
 
 function generateCodeSelectTable(){	
-	var lblCodeSelect = document.createElement('LABEL');
+	var divGameNr = document.createElement('DIV');
+	var divPlayerNr = document.createElement('DIV');
 	currentPlayer = currentGame % 2;
 	if(currentPlayer == 0){
 		currentPlayer = 2;
 	} else {
 		currentPlayer = 1;
 	}
-	var lblCodeSelectText = 'Runde ' + currentGame + ': Spieler ' + currentPlayer;
 	
-	lblCodeSelect.innerHTML = lblCodeSelectText;
+	divGameNr.innerHTML = 'Runde ' + currentGame;
+	divPlayerNr.innerHTML = 'Codeauswahl: <b>Spieler ' + currentPlayer + '</b>';
 	
-	divCodeSelect.appendChild(lblCodeSelect);
+	divCodeSelect.appendChild(divGameNr);
+	divCodeSelect.appendChild(divPlayerNr);
 
 	var table = document.createElement('TABLE');
 	table.border = 1;
@@ -246,7 +248,7 @@ function generateCodeSelectTable(){
 function generateCodeSelectButton(){
 	var button = document.createElement('INPUT');
 	button.type = 'button';
-	button.value = 'Set Code';
+	button.value = 'Code setzen';
 	button.onclick = btnSetCodeHandler;
 	
 	divCodeSelect.appendChild(button);
@@ -896,6 +898,20 @@ function calculateAverage(){
 		minutesPlayer2++;
 	}
 	secondsPlayer2 = Math.round(secondsPlayer2);
+}
+
+function checkWinner(){
+	if(scorePlayer1 > scorePlayer2){
+		return 1;
+	} else {
+		if(scorePlayer1 == scorePlayer2){
+			if(triesPlayer1 < triesPlayer2){
+				return 1;
+			} else {
+				
+			}
+		}
+	}
 }
 
 // ***********
