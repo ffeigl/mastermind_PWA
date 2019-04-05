@@ -812,6 +812,7 @@ function Dialog(){
 			var divPlayerScores = document.createElement('DIV');
 			var divPlayerTimes = document.createElement('DIV');
 			var divPlayerTries = document.createElement('DIV');
+			var divWinner = document.createElement('DIV');
 			
 			divPlayerNames.innerHTML = 'Spieler 1   -   Spieler 2';
 			divPlayerScores.innerHTML = scorePlayer1 + '   -   ' + scorePlayer2;
@@ -819,11 +820,14 @@ function Dialog(){
 			'   -   ' + (minutesPlayer2 ? (minutesPlayer2 > 9 ? minutesPlayer2 : "0" + minutesPlayer2) : "00") + ":" + (secondsPlayer2 > 9 ? secondsPlayer2 : "0" + secondsPlayer2);
 			divPlayerTries.innerHTML = triesPlayer1 + '   -   ' + triesPlayer2;
 			
+			divWinner.innerHTML = 'Gewinner: Spieler ' + checkWinner();
+			
 			
 			dialogBoxBody.appendChild(divPlayerNames);
 			dialogBoxBody.appendChild(divPlayerScores);
-			dialogBoxBody.appendChild(divPlayerTimes);
 			dialogBoxBody.appendChild(divPlayerTries);
+			dialogBoxBody.appendChild(divPlayerTimes);
+			dialogBoxBody.appendChild(divWinner);
 		}
 		
 		var btnMenu = document.createElement('INPUT');
@@ -908,8 +912,26 @@ function checkWinner(){
 			if(triesPlayer1 < triesPlayer2){
 				return 1;
 			} else {
-				
+				if(triesPlayer1 == triesPlayer2){
+					if(minutesPlayer1 < minutesPlayer2){
+						return 1;
+					} else {
+						if(minutesPlayer1 == minutesPlayer2){
+							if(secondsPlayer1 < secondsPlayer2){
+								return 1;
+							} else {
+								return 2;
+							}
+						} else {
+							return 2;
+						}
+					}
+				} else {
+					return 2;
+				}
 			}
+		} else {
+			return 2;
 		}
 	}
 }
