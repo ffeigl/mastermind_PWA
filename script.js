@@ -29,14 +29,14 @@ function generateManualHighscoreButtons(){
 	var btnManual = document.createElement('INPUT');
 	btnManual.type = 'button';
 	btnManual.value = 'Spielanleitung';
-	//btnManual.onclick = btnManualHandler;
+	btnManual.onclick = btnManualHandler;
 	
 	divManualHighscoreButtons.appendChild(btnManual);
 	
 	var btnHighscore = document.createElement('INPUT');
 	btnHighscore.type = 'button';
 	btnHighscore.value = 'Highscore';
-	//btnHighscore.onclick = btnHighscoreHandler;
+	btnHighscore.onclick = btnHighscoreHandler;
 	
 	divManualHighscoreButtons.appendChild(btnHighscore);
 }
@@ -86,9 +86,7 @@ function generateRoundsSelect(){
 	lblRoundsSelect.innerHTML = 'Anzahl der Runden: ';
 	
 	divRoundsSelect.appendChild(lblRoundsSelect);
-	
-	
-	
+
 	var rounds2 = document.createElement('OPTION');
 	rounds2.innerHTML = '2';
 	roundsSelect.appendChild(rounds2);
@@ -173,11 +171,11 @@ function rdoMasterHandler(){
 }
 
 function btnManualHandler(){
-	
+	console.log('Anleitung');
 }
 
 function btnHighscoreHandler(){
-	
+	console.log('Highscore');
 }
 
 function btnGameStartHandler(){
@@ -208,7 +206,7 @@ function initCodeSelect(){
 	assignClickHandler();
 }
 
-function generateCodeSelectTable(){	
+function generateCodeSelectTable(){
 	var divGameNr = document.createElement('DIV');
 	var divPlayerNr = document.createElement('DIV');
 	currentPlayer = currentGame % 2;
@@ -294,11 +292,30 @@ function initGame(){
 	currentRow = rows-1;
 	if(numberOfGames == ''){
 		generateCode();
+	} else {
+		generateGameInfo();
 	}
 	codeAusgeben();
 	activateCurrentRow();
 	
 	startTimer();
+}
+
+function generateGameInfo(){
+	var divGameNr = document.createElement('DIV');
+	var divPlayerNr = document.createElement('DIV');
+	currentPlayer = currentGame % 2;
+	if(currentPlayer == 0){
+		currentPlayer = 1;
+	} else {
+		currentPlayer = 2;
+	}
+	
+	divGameNr.innerHTML = 'Runde ' + currentGame;
+	divPlayerNr.innerHTML = '<b>Spieler ' + currentPlayer + '</b>';
+	
+	divCurrentPlayer.appendChild(divGameNr);
+	divCurrentPlayer.appendChild(divPlayerNr);
 }
 
 function generateTable() {
@@ -1003,6 +1020,7 @@ function removeCodeSelect(){
 // Game
 function removeGame(){
 	removeSolution();
+	removeGameInfo();
 	removeTable();
 	removeColorsInfo();
 }
@@ -1010,6 +1028,12 @@ function removeGame(){
 function removeSolution(){
 	while(divSolution.firstChild){
 		divSolution.removeChild(divSolution.firstChild);
+	}
+}
+
+function removeGameInfo(){
+	while(divCurrentPlayer.firstChild){
+		divCurrentPlayer.removeChild(divCurrentPlayer.firstChild);
 	}
 }
 
@@ -1065,6 +1089,7 @@ var roundsSelect = document.createElement('SELECT');
 var divCodeSelect = document.getElementById('codeSelect');
 var trCustomCode;
 
+var divCurrentPlayer = document.getElementById('currentPlayer');
 var divSolution = document.getElementById('solution');
 var divTable = document.getElementById('table');
 var divColorsInfo = document.getElementById('colorsInfo');
