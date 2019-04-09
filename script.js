@@ -12,6 +12,7 @@ function initMenu(){
 function generateGameModeButtons(){	
 	var btnSinglePlayer = document.createElement('INPUT');
 	btnSinglePlayer.type = 'button';
+	btnSinglePlayer.className = 'btnMenu';
 	btnSinglePlayer.value = 'Ein Spieler';
 	btnSinglePlayer.onclick = btnSinglePlayerHandler;
 	
@@ -19,6 +20,7 @@ function generateGameModeButtons(){
 	
 	var btnTwoPlayer = document.createElement('INPUT');
 	btnTwoPlayer.type = 'button';
+	btnTwoPlayer.className = 'btnMenu';
 	btnTwoPlayer.value = 'Zwei Spieler';
 	btnTwoPlayer.onclick = btnTwoPlayerHandler;
 	
@@ -28,6 +30,7 @@ function generateGameModeButtons(){
 function generateManualHighscoreButtons(){
 	var btnManual = document.createElement('INPUT');
 	btnManual.type = 'button';
+	btnManual.className = 'btnMenu';
 	btnManual.value = 'Spielanleitung';
 	btnManual.onclick = btnManualHandler;
 	
@@ -35,6 +38,7 @@ function generateManualHighscoreButtons(){
 	
 	var btnHighscore = document.createElement('INPUT');
 	btnHighscore.type = 'button';
+	btnHighscore.className = 'btnMenu';
 	btnHighscore.value = 'Highscore';
 	btnHighscore.onclick = btnHighscoreHandler;
 	
@@ -332,6 +336,7 @@ function generateTable() {
   var table = document.createElement('TABLE');
   divTable.className = 'table';
   table.border = '1';
+  table.id = 'gameTable';
 
   var tableBody = document.createElement('TBODY');
   table.appendChild(tableBody);
@@ -392,8 +397,8 @@ function generateTable() {
 
 function generateColorsInfo(){
 	var tblColorsInfo = document.createElement('TABLE');
-	
-	tblColorsInfo.className = 'colorsInfo';
+	tblColorsInfo.style.height = document.getElementById('gameTable').offsetHeight + 'px';
+	tblColorsInfo.style.width = '25px';
 	
 	var tblBodyColorsInfo = document.createElement('TBODY');
 	tblColorsInfo.appendChild(tblBodyColorsInfo);
@@ -406,8 +411,6 @@ function generateColorsInfo(){
 		
 		colorsTR.appendChild(colorsTD);
 		colorsTD.style.backgroundColor = assignColor(i);
-		colorsTD.width = '45';
-		colorsTD.height = '45';
 		tblBodyColorsInfo.appendChild(colorsTR);
 	}
 	
@@ -845,7 +848,7 @@ function Dialog(){
 			var divPlayerTriesTitle = document.createElement('DIV');
 			var divWinnerTitle = document.createElement('DIV');
 			
-			divPlayerNamesTitle.innerHTML = '.';
+			divPlayerNamesTitle.innerHTML = '\xa0';
 			divPlayerNamesTitle.style.color = 'white';
 			divPlayerScoresTitle.innerHTML = '<b>Punkte:</b>';
 			divPlayerTimesTitle.innerHTML = '<b>&Oslash Zeit:</b>';
@@ -884,12 +887,6 @@ function Dialog(){
 			
 			dialogBoxBody.appendChild(divTitle);
 			dialogBoxBody.appendChild(divResult);
-			
-			//dialogBoxBody.appendChild(divPlayerNames);
-			//dialogBoxBody.appendChild(divPlayerScores);
-			//dialogBoxBody.appendChild(divPlayerTries);
-			//dialogBoxBody.appendChild(divPlayerTimes);
-			//dialogBoxBody.appendChild(divWinner);
 		}
 		
 		var btnMenu = document.createElement('INPUT');

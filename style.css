@@ -1,3 +1,7 @@
+.btnMenu{
+	width: 105px;
+}
+
 .number{
 	font-size: 12px;
 	text-align: center;
@@ -26,9 +30,6 @@
 
 .table{
 	float: left;
-}
-
-.colorsInfo{
 }
 
 
