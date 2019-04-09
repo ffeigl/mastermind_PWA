@@ -171,10 +171,20 @@ function rdoMasterHandler(){
 }
 
 function btnManualHandler(){
+	removeGameModeSelect();
+	removeGameModeInfo();
+	removeRoundsSelect();
+	removeGameStartButton();
+	
 	console.log('Anleitung');
 }
 
 function btnHighscoreHandler(){
+	removeGameModeSelect();
+	removeGameModeInfo();
+	removeRoundsSelect();
+	removeGameStartButton();
+	
 	console.log('Highscore');
 }
 
@@ -825,26 +835,61 @@ function Dialog(){
 			dialogBoxHead.innerHTML = '<b>Auswertung</b>';
 			calculateAverage();
 			
+			var divTitle = document.createElement('DIV');
+			divTitle.className = 'table';
+			divTitle.style.textAlign = 'left';
+			
+			var divPlayerNamesTitle = document.createElement('DIV');
+			var divPlayerScoresTitle = document.createElement('DIV');
+			var divPlayerTimesTitle = document.createElement('DIV');
+			var divPlayerTriesTitle = document.createElement('DIV');
+			var divWinnerTitle = document.createElement('DIV');
+			
+			divPlayerNamesTitle.innerHTML = '.';
+			divPlayerNamesTitle.style.color = 'white';
+			divPlayerScoresTitle.innerHTML = '<b>Punkte:</b>';
+			divPlayerTimesTitle.innerHTML = '<b>&Oslash Zeit:</b>';
+			divPlayerTriesTitle.innerHTML = '<b>&Oslash Versuche:</b>';
+			divWinnerTitle.innerHTML = '<b>Gewinner:</b>';
+			
+			
+			divTitle.appendChild(divPlayerNamesTitle);
+			divTitle.appendChild(divPlayerScoresTitle);
+			divTitle.appendChild(divPlayerTriesTitle);
+			divTitle.appendChild(divPlayerTimesTitle);
+			divTitle.appendChild(divWinnerTitle);
+			
+			
+			var divResult = document.createElement('DIV');
+			
 			var divPlayerNames = document.createElement('DIV');
 			var divPlayerScores = document.createElement('DIV');
 			var divPlayerTimes = document.createElement('DIV');
 			var divPlayerTries = document.createElement('DIV');
 			var divWinner = document.createElement('DIV');
 			
-			divPlayerNames.innerHTML = 'Spieler 1   -   Spieler 2';
-			divPlayerScores.innerHTML = scorePlayer1 + '   -   ' + scorePlayer2;
+			divPlayerNames.innerHTML = 'Spieler 1' + '\xa0\xa0\xa0-\xa0\xa0\xa0' + 'Spieler 2';
+			divPlayerScores.innerHTML = scorePlayer1 + '\xa0\xa0\xa0-\xa0\xa0\xa0' + scorePlayer2;
 			divPlayerTimes.innerHTML = (minutesPlayer1 ? (minutesPlayer1 > 9 ? minutesPlayer1 : "0" + minutesPlayer1) : "00") + ":" + (secondsPlayer1 > 9 ? secondsPlayer1 : "0" + secondsPlayer1) + 
-			'   -   ' + (minutesPlayer2 ? (minutesPlayer2 > 9 ? minutesPlayer2 : "0" + minutesPlayer2) : "00") + ":" + (secondsPlayer2 > 9 ? secondsPlayer2 : "0" + secondsPlayer2);
-			divPlayerTries.innerHTML = triesPlayer1 + '   -   ' + triesPlayer2;
+			'\xa0\xa0\xa0-\xa0\xa0\xa0' + (minutesPlayer2 ? (minutesPlayer2 > 9 ? minutesPlayer2 : "0" + minutesPlayer2) : "00") + ":" + (secondsPlayer2 > 9 ? secondsPlayer2 : "0" + secondsPlayer2);
+			divPlayerTries.innerHTML = triesPlayer1 + '\xa0\xa0\xa0-\xa0\xa0\xa0' + triesPlayer2;
 			
-			divWinner.innerHTML = 'Gewinner: Spieler ' + checkWinner();
+			divWinner.innerHTML = 'Spieler ' + checkWinner();
 			
+			divResult.appendChild(divPlayerNames);
+			divResult.appendChild(divPlayerScores);
+			divResult.appendChild(divPlayerTries);
+			divResult.appendChild(divPlayerTimes);
+			divResult.appendChild(divWinner);
 			
-			dialogBoxBody.appendChild(divPlayerNames);
-			dialogBoxBody.appendChild(divPlayerScores);
-			dialogBoxBody.appendChild(divPlayerTries);
-			dialogBoxBody.appendChild(divPlayerTimes);
-			dialogBoxBody.appendChild(divWinner);
+			dialogBoxBody.appendChild(divTitle);
+			dialogBoxBody.appendChild(divResult);
+			
+			//dialogBoxBody.appendChild(divPlayerNames);
+			//dialogBoxBody.appendChild(divPlayerScores);
+			//dialogBoxBody.appendChild(divPlayerTries);
+			//dialogBoxBody.appendChild(divPlayerTimes);
+			//dialogBoxBody.appendChild(divWinner);
 		}
 		
 		var btnMenu = document.createElement('INPUT');
