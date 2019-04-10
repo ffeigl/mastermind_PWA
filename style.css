@@ -32,6 +32,28 @@
 	float: left;
 }
 
+#gameModeSelect{
+	width: 210px;
+	text-align: center;
+}
+
+#rdoMaster{
+	margin-left: 20px;
+}
+
+#gameModeInfo{
+	width: 210px;
+	margin-left: 10px;
+}
+
+#roundsSelect{
+	margin-left: 10px;
+}
+
+#btnGameStart{
+	width: 210px;
+}
+
 
 #dialogOverlay{
 	display: none;
