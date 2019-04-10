@@ -50,6 +50,11 @@ function generateGameModeSelect(){
 	columns = 4;
 	colors = 6;
 	
+	var divGameModeNormal = document.createElement('DIV');
+	var divGameModeMaster = document.createElement('DIV');
+	divGameModeNormal.className = 'gameModeRadios';
+	divGameModeMaster.className = 'gameModeRadios';
+	
 	rdoNormal = document.createElement('INPUT');
 	rdoNormal.type = 'radio';
 	rdoNormal.name = 'gameModeSelecter';
@@ -60,21 +65,23 @@ function generateGameModeSelect(){
 	lblNormal.innerHTML = 'Normal';
 	lblNormal.onclick = rdoNormalHandler;
 	
-	divGameModeSelect.appendChild(rdoNormal);
-	divGameModeSelect.appendChild(lblNormal);
+	divGameModeNormal.appendChild(rdoNormal);
+	divGameModeNormal.appendChild(lblNormal);
 	
 	rdoMaster = document.createElement('INPUT');
 	rdoMaster.type = 'radio';
 	rdoMaster.name = 'gameModeSelecter';
 	rdoMaster.onclick = rdoMasterHandler;
-	rdoMaster.id = 'rdoMaster';
 	
 	var lblMaster = document.createElement('LABEL');
 	lblMaster.innerHTML = 'Master';
 	lblMaster.onclick = rdoMasterHandler;
 	
-	divGameModeSelect.appendChild(rdoMaster);
-	divGameModeSelect.appendChild(lblMaster);
+	divGameModeMaster.appendChild(rdoMaster);
+	divGameModeMaster.appendChild(lblMaster);
+	
+	divGameModeSelect.appendChild(divGameModeNormal);
+	divGameModeSelect.appendChild(divGameModeMaster);
 	
 	generateGameModeInfo();
 }
@@ -448,6 +455,9 @@ function generateBtnCheck(){
 	divTable.appendChild(button);
 	
 	lblTimer.innerHTML = '00:00';
+	lblTimer.id = 'timer';
+	lblTimer.style.position = 'absolute';
+	lblTimer.style.left = document.getElementById('gameTable').offsetWidth + 10 + 'px';
 	
 	divTable.appendChild(lblTimer);
 }

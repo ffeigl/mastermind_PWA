@@ -34,11 +34,12 @@
 
 #gameModeSelect{
 	width: 210px;
-	text-align: center;
 }
 
-#rdoMaster{
-	margin-left: 20px;
+.gameModeRadios{
+	float: left;
+	width: 105px;
+	text-align: center;
 }
 
 #gameModeInfo{
