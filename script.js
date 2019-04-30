@@ -43,6 +43,15 @@ function generateManualHighscoreButtons(){
 	btnHighscore.onclick = btnHighscoreHandler;
 	
 	divManualHighscoreButtons.appendChild(btnHighscore);
+	
+	// *** TEST ***
+	var btnResetHighscore = document.createElement('INPUT');
+	btnResetHighscore.type = 'button';
+	btnResetHighscore.className = 'btnMenu';
+	btnResetHighscore.value = 'Reset Highscore';
+	btnResetHighscore.onclick = btnResetHighscoreHandler;
+	
+	divManualHighscoreButtons.appendChild(btnResetHighscore);
 }
 
 function generateGameModeSelect(){
@@ -204,7 +213,23 @@ function btnHighscoreHandler(){
 	removeRoundsSelect();
 	removeGameStartButton();
 	
-	console.log('Highscore');
+	var hsGamesNormal;
+	var hsTriesNormal;
+	var hsMinutesNormal;
+	var hsSecondsNormal;
+	var hsGamesMaster;
+	var hsTriesMaster;
+	var hsMinutesMaster;
+	var hsSecondsMaster;
+	
+	getHighscores();
+	outputHighscores();
+	
+	
+}
+
+function btnResetHighscoreHandler(){
+	localStorage.clear();
 }
 
 function btnGameStartHandler(){
@@ -216,6 +241,65 @@ function btnGameStartHandler(){
 		initCodeSelect();
 	}
 	
+}
+
+function getHighscores(){
+	if(localStorage.getItem('hsGamesNormal') == null){
+		hsGamesNormal = 0;
+	}else{
+		hsGamesNormal = localStorage.getItem('hsGamesNormal');
+	}
+	
+	if(localStorage.getItem('hsTriesNormal') == null){
+		hsTriesNormal = 'N/A';
+	}else{
+		hsTriesNormal = localStorage.getItem('hsTriesNormal');
+	}
+	
+	if(localStorage.getItem('hsMinutesNormal') == null){
+		hsMinutesNormal = 'N/A';
+	}else{
+		hsMinutesNormal = localStorage.getItem('hsMinutesNormal');
+	}
+	
+	if(localStorage.getItem('hsSecondsNormal') == null){
+		hsSecondsNormal = 'N/A';
+	}else{
+		hsSecondsNormal = localStorage.getItem('hsSecondsNormal');
+	}
+	
+	if(localStorage.getItem('hsGamesMaster') == null){
+		hsGamesMaster = 0;
+	}else{
+		hsGamesMaster = localStorage.getItem('hsGamesMaster');
+	}
+	
+	if(localStorage.getItem('hsTriesMaster') == null){
+		hsTriesMaster = 'N/A';
+	}else{
+		hsTriesMaster = localStorage.getItem('hsTriesMaster');
+	}
+	
+	if(localStorage.getItem('hsMinutesMaster') == null){
+		hsMinutesMaster = 'N/A';
+	}else{
+		hsMinutesMaster = localStorage.getItem('hsMinutesMaster');
+	}
+	
+	if(localStorage.getItem('hsSecondsMaster') == null){
+		hsSecondsMaster = 'N/A';
+	}else{
+		hsSecondsMaster = localStorage.getItem('hsSecondsMaster');
+	}
+}
+
+function outputHighscores(){
+	console.log('Spiele insgesamt (n): ' + hsGamesNormal);
+	console.log('Wenigste Versuche (n): ' + hsTriesNormal);
+	console.log('Schnellste Zeit (n): ' + hsMinutesNormal + ':' + hsSecondsNormal);
+	console.log('Spiele insgesamt (m): ' + hsGamesMaster);
+	console.log('Wenigste Versuche (m): ' + hsTriesMaster);
+	console.log('Schnellste Zeit (m): ' + hsMinutesMaster + ':' + hsSecondsMaster);
 }
 
 // **********
@@ -246,8 +330,8 @@ function generateCodeSelectTable(){
 		currentPlayer = 1;
 	}
 	
-	divGameNr.innerHTML = 'Runde ' + currentGame;
-	divPlayerNr.innerHTML = 'Codeauswahl: <b>Spieler ' + currentPlayer + '</b>';
+	divGameNr.innerHTML = 'Runde <b>' + currentGame + '</b> / ' + numberOfGames;
+	divPlayerNr.innerHTML = 'Kombinationsauswahl: <b>Spieler ' + currentPlayer + '</b>';
 	
 	divCodeSelect.appendChild(divGameNr);
 	divCodeSelect.appendChild(divPlayerNr);
@@ -626,6 +710,7 @@ function btnCheckHandler(){
 				assignClickHandler();
 				generateSolution();
 				stopTimer();
+				setHighscore();
 				dialog.render();
 			} else {
 				if(currentRow > 0){
@@ -811,9 +896,90 @@ function showGameErrorMessage(errorMessage){
 	divGameError.innerHTML = errorMessage;
 }
 
+function setHighscore(){
+	if(numberOfGames == ''){
+		// Highscores für Normal
+		if(columns == 4){
+			
+			// Anzahl der Spiele
+			var allGames;
+			if(localStorage.getItem('hsGamesNormal') == null){
+				localStorage.setItem('hsGamesNormal', 1);
+			}else{
+				allGames = localStorage.getItem('hsGamesNormal');
+				allGames++;
+				localStorage.setItem('hsGamesNormal', allGames);
+			}
+			
+			// Wenigste Versuche
+			var triesNeeded = rows-currentRow;
+			if(localStorage.getItem('hsTriesNormal') == null){
+				localStorage.setItem('hsTriesNormal', triesNeeded);
+			} else {
+				if(triesNeeded < localStorage.getItem('hsTriesNormal')){
+					localStorage.setItem('hsTriesNormal', triesNeeded);
+				}
+			}
+			
+			// Beste Zeit
+			if(localStorage.getItem('hsMinutesNormal') == null){
+				localStorage.setItem('hsMinutesNormal', minutes);
+				localStorage.setItem('hsSecondsNormal', seconds);
+			} else {
+				if(minutes < localStorage.getItem('hsMinutesNormal')){
+					localStorage.setItem('hsMinutesNormal', minutes);
+					localStorage.setItem('hsSecondsNormal', seconds);
+				} else {
+					if(minutes == localStorage.getItem('hsMinutesNormal') && seconds < localStorage.getItem('hsSecondsNormal')){
+						localStorage.setItem('hsMinutesNormal', minutes);
+						localStorage.setItem('hsSecondsNormal', seconds);
+					}
+				}
+			}
+		} else {
+			
+			// Anzahl der Spiele
+			var allGames;
+			if(localStorage.getItem('hsGamesMaster') == null){
+				localStorage.setItem('hsGamesMaster', 1);
+			}else{
+				allGames = localStorage.getItem('hsGamesMaster') + 1;
+				localStorage.setItem('hsGamesMaster', allGames);
+			}
+			
+			// Wenigste Versuche
+			var triesNeeded = rows-currentRow;
+			if(localStorage.getItem('hsTriesMaster') == null){
+				localStorage.setItem('hsTriesMaster', triesNeeded);
+			} else {
+				if(triesNeeded < localStorage.getItem('hsTriesMaster')){
+					localStorage.setItem('hsTriesMaster', triesNeeded);
+				}
+			}
+			
+			// Beste Zeit
+			if(localStorage.getItem('hsMinutesMaster') == null){
+				localStorage.setItem('hsMinutesMaster', minutes);
+				localStorage.setItem('hsSecondsMaster', seconds);
+			} else {
+				if(minutes < localStorage.getItem('hsMinutesMaster')){
+					localStorage.setItem('hsMinutesMaster', minutes);
+					localStorage.setItem('hsSecondsMaster', seconds);
+				} else {
+					if(minutes == localStorage.getItem('hsMinutesMaster') && seconds < localStorage.getItem('hsSecondsMaster')){
+						localStorage.setItem('hsMinutesMaster', minutes);
+						localStorage.setItem('hsSecondsMaster', seconds);
+					}
+				}
+			}
+		}
+	}
+}
+
 // **********
 // * DIALOG *
 // **********
+
 function Dialog(){
 	this.render = function(string){
 		var winW = window.innerWidth;
@@ -1167,6 +1333,7 @@ var divGameModeInfo = document.getElementById('gameModeInfo');
 var divRoundsSelect = document.getElementById('roundsSelect');
 var divGameStartButton = document.getElementById('gameStartButton');
 var divManualHighscoreButtons = document.getElementById('manualHighscoreButtons');
+var divManualHighscoreText = document.getElementById('manualHighscoreText');
 
 var roundsSelect = document.createElement('SELECT');
 
