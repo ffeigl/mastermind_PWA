@@ -1,9 +1,14 @@
-#window{
+input{
 	font-family: Arial;
 }
 
+#window{
+	font-family: Arial;
+	font-size: 15px;
+}
+
 .btnMenu{
-	width: 105px;
+	width: 150px;
 }
 
 .number{
@@ -37,17 +42,17 @@
 }
 
 #gameModeSelect{
-	width: 210px;
+	width: 300px;
 }
 
 .gameModeRadios{
 	float: left;
-	width: 105px;
+	width: 150px;
 	text-align: center;
 }
 
 #gameModeInfo{
-	width: 210px;
+	width: 300px;
 	margin-left: 10px;
 }
 
@@ -56,10 +61,11 @@
 }
 
 #btnGameStart{
-	width: 210px;
+	width: 300px;
 }
 
 #manualHighscoreText{
+	width: 296px;
 }
 
 #dialogOverlay{

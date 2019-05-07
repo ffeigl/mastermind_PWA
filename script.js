@@ -43,15 +43,6 @@ function generateManualHighscoreButtons(){
 	btnHighscore.onclick = btnHighscoreHandler;
 	
 	divManualHighscoreButtons.appendChild(btnHighscore);
-	
-	// *** TEST ***
-	var btnResetHighscore = document.createElement('INPUT');
-	btnResetHighscore.type = 'button';
-	btnResetHighscore.className = 'btnMenu';
-	btnResetHighscore.value = 'Reset Highscore';
-	btnResetHighscore.onclick = btnResetHighscoreHandler;
-	
-	divManualHighscoreButtons.appendChild(btnResetHighscore);
 }
 
 function generateGameModeSelect(){
@@ -227,14 +218,12 @@ function btnHighscoreHandler(){
 	var hsSecondsMaster;
 	
 	getHighscores();
-	outputHighscores();
 	generateHighscores();
-	
-	
 }
 
 function btnResetHighscoreHandler(){
 	localStorage.clear();
+	btnHighscoreHandler();
 }
 
 function btnGameStartHandler(){
@@ -299,61 +288,8 @@ function getHighscores(){
 }
 
 function generateHighscores(){
-	/**
-	var divDifficultyTitle = document.createElement('DIV');
-	var divNumberOfGamesTitle = document.createElement('DIV');
-	var divLeastTriesTitle = document.createElement('DIV');
-	var divBestTimeTitle = document.createElement('DIV');
-	
-	divDifficultyTitle.innerHTML = '\xa0';
-	divNumberOfGamesTitle.innerHTML = '<b>Spiele:</b>';
-	divLeastTriesTitle.innerHTML = '<b>Wenigste Versuche:</b>';
-	divBestTimeTitle.innerHTML = '<b>Schnellste Zeit:</b>';
-	
-	divTitle.appendChild(divDifficultyTitle);
-	divTitle.appendChild(divNumberOfGamesTitle);
-	divTitle.appendChild(divLeastTriesTitle);
-	divTitle.appendChild(divBestTimeTitle);
-	
-	
-	var divScores = document.createElement('DIV');
-	divScores.style.textAlign = 'center';
-	
-	var divDifficulty = document.createElement('DIV');
-	var divNumberOfGames = document.createElement('DIV');
-	var divLeastTries = document.createElement('DIV');
-	var divBestTime = document.createElement('DIV');
-	
-	divDifficulty.innerHTML = 'Normal' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Master';
-	divNumberOfGames.innerHTML = hsGamesNormal + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + hsGamesMaster;
-	divLeastTries.innerHTML = hsTriesNormal + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + hsTriesMaster;
-	
-	var hsTimeNormal;
-	var hsTimeMaster;
-	
-	if(hsMinutesNormal == 'N/A'){
-		hsTimeNormal = 'N/A';
-	} else {
-		hsTimeNormal = (hsMinutesNormal ? (hsMinutesNormal > 9 ? hsMinutesNormal : "0" + hsMinutesNormal) : "00") + ":" + (hsSecondsNormal > 9 ? hsSecondsNormal : "0" + hsSecondsNormal);
-	}
-	
-	if(hsMinutesMaster == 'N/A'){
-		hsTimeMaster = 'N/A';
-	} else {
-		hsTimeMaster = (hsMinutesMaster ? (hsMinutesMaster > 9 ? hsMinutesMaster : "0" + hsMinutesMaster) : "00") + ":" + (hsSecondsMaster > 9 ? hsSecondsMaster : "0" + hsSecondsMaster);
-	}
-	
-	divBestTime.innerHTML = hsTimeNormal + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + hsTimeMaster;
-	
-
-	divScores.appendChild(divDifficulty);
-	divScores.appendChild(divNumberOfGames);
-	divScores.appendChild(divLeastTries);
-	divScores.appendChild(divBestTime);
-	**/
-	
 	var tableHighscore = document.createElement('TABLE');
-	tableHighscore.width = '315px';
+	tableHighscore.width = '300px';
 	tableHighscore.style.textAlign = 'center';
 	var tblBodyHighscore = document.createElement('TBODY');
 	tableHighscore.appendChild(tblBodyHighscore);
@@ -369,10 +305,13 @@ function generateHighscores(){
 	tblBodyHighscore.appendChild(trHighscore3);
 	
 	tdHighscore00 = document.createElement('TD');
+	tdHighscore00.style.width = '100px';
 	tdHighscore01 = document.createElement('TD');
 	tdHighscore01.appendChild(document.createTextNode('Normal'));
+	tdHighscore01.style.width = '75px';
 	tdHighscore02 = document.createElement('TD');
 	tdHighscore02.appendChild(document.createTextNode('Master'));
+	tdHighscore02.style.width = '75px';
 	
 	trHighscore0.appendChild(tdHighscore00);
 	trHighscore0.appendChild(tdHighscore01);
@@ -390,7 +329,7 @@ function generateHighscores(){
 	trHighscore1.appendChild(tdHighscore12);
 	
 	tdHighscore20 = document.createElement('TD');
-	tdHighscore20.appendChild(document.createTextNode('Wenigste Versuche:'));
+	tdHighscore20.appendChild(document.createTextNode('Versuche:'));
 	tdHighscore21 = document.createElement('TD');
 	tdHighscore21.appendChild(document.createTextNode(hsTriesNormal));
 	tdHighscore22 = document.createElement('TD');
@@ -417,7 +356,7 @@ function generateHighscores(){
 	}
 	
 	tdHighscore30 = document.createElement('TD');
-	tdHighscore30.appendChild(document.createTextNode('Beste Zeit:'));
+	tdHighscore30.appendChild(document.createTextNode('Zeit:'));
 	tdHighscore31 = document.createElement('TD');
 	tdHighscore31.appendChild(document.createTextNode(hsTimeNormal));
 	tdHighscore32 = document.createElement('TD');
@@ -427,18 +366,20 @@ function generateHighscores(){
 	trHighscore3.appendChild(tdHighscore31);
 	trHighscore3.appendChild(tdHighscore32);
 	
-	divManualHighscoreText.appendChild(tableHighscore);
 	
-	//divManualHighscoreText.appendChild(divScores);
-}
-
-function outputHighscores(){
-	console.log('Spiele insgesamt (n): ' + hsGamesNormal);
-	console.log('Wenigste Versuche (n): ' + hsTriesNormal);
-	console.log('Schnellste Zeit (n): ' + hsMinutesNormal + ':' + hsSecondsNormal);
-	console.log('Spiele insgesamt (m): ' + hsGamesMaster);
-	console.log('Wenigste Versuche (m): ' + hsTriesMaster);
-	console.log('Schnellste Zeit (m): ' + hsMinutesMaster + ':' + hsSecondsMaster);
+	// *** TEST ***
+	var btnResetHighscore = document.createElement('INPUT');
+	btnResetHighscore.type = 'button';
+	btnResetHighscore.className = 'btnMenu';
+	btnResetHighscore.value = 'Highscores zurücksetzen';
+	btnResetHighscore.style.width = '296px';
+	btnResetHighscore.onclick = btnResetHighscoreHandler;
+	
+	divManualHighscoreText.appendChild(tableHighscore);
+	divManualHighscoreText.appendChild(btnResetHighscore);
+	
+	divManualHighscoreText.style.border = '2px solid black';
+	
 }
 
 // **********
@@ -1406,6 +1347,7 @@ function removeManualHighscoreText(){
 	while(divManualHighscoreText.firstChild){
 		divManualHighscoreText.removeChild(divManualHighscoreText.firstChild);
 	}
+	divManualHighscoreText.style.border = '';
 }
 
 // CodeSelect
