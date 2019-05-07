@@ -299,10 +299,7 @@ function getHighscores(){
 }
 
 function generateHighscores(){
-	var divTitle = document.createElement('DIV');
-	divTitle.className = 'table';
-	divTitle.style.textAlign = 'center';
-	
+	/**
 	var divDifficultyTitle = document.createElement('DIV');
 	var divNumberOfGamesTitle = document.createElement('DIV');
 	var divLeastTriesTitle = document.createElement('DIV');
@@ -317,6 +314,7 @@ function generateHighscores(){
 	divTitle.appendChild(divNumberOfGamesTitle);
 	divTitle.appendChild(divLeastTriesTitle);
 	divTitle.appendChild(divBestTimeTitle);
+	
 	
 	var divScores = document.createElement('DIV');
 	divScores.style.textAlign = 'center';
@@ -352,9 +350,86 @@ function generateHighscores(){
 	divScores.appendChild(divNumberOfGames);
 	divScores.appendChild(divLeastTries);
 	divScores.appendChild(divBestTime);
+	**/
 	
-	divManualHighscoreText.appendChild(divTitle);
-	divManualHighscoreText.appendChild(divScores);
+	var tableHighscore = document.createElement('TABLE');
+	tableHighscore.width = '315px';
+	tableHighscore.style.textAlign = 'center';
+	var tblBodyHighscore = document.createElement('TBODY');
+	tableHighscore.appendChild(tblBodyHighscore);
+	
+	trHighscore0 = document.createElement('TR');
+	trHighscore1 = document.createElement('TR');
+	trHighscore2 = document.createElement('TR');
+	trHighscore3 = document.createElement('TR');
+	
+	tblBodyHighscore.appendChild(trHighscore0);
+	tblBodyHighscore.appendChild(trHighscore1);
+	tblBodyHighscore.appendChild(trHighscore2);
+	tblBodyHighscore.appendChild(trHighscore3);
+	
+	tdHighscore00 = document.createElement('TD');
+	tdHighscore01 = document.createElement('TD');
+	tdHighscore01.appendChild(document.createTextNode('Normal'));
+	tdHighscore02 = document.createElement('TD');
+	tdHighscore02.appendChild(document.createTextNode('Master'));
+	
+	trHighscore0.appendChild(tdHighscore00);
+	trHighscore0.appendChild(tdHighscore01);
+	trHighscore0.appendChild(tdHighscore02);
+	
+	tdHighscore10 = document.createElement('TD');
+	tdHighscore10.appendChild(document.createTextNode('Spiele:'));
+	tdHighscore11 = document.createElement('TD');
+	tdHighscore11.appendChild(document.createTextNode(hsGamesNormal));
+	tdHighscore12 = document.createElement('TD');
+	tdHighscore12.appendChild(document.createTextNode(hsGamesMaster));
+	
+	trHighscore1.appendChild(tdHighscore10);
+	trHighscore1.appendChild(tdHighscore11);
+	trHighscore1.appendChild(tdHighscore12);
+	
+	tdHighscore20 = document.createElement('TD');
+	tdHighscore20.appendChild(document.createTextNode('Wenigste Versuche:'));
+	tdHighscore21 = document.createElement('TD');
+	tdHighscore21.appendChild(document.createTextNode(hsTriesNormal));
+	tdHighscore22 = document.createElement('TD');
+	tdHighscore22.appendChild(document.createTextNode(hsTriesMaster));
+	
+	trHighscore2.appendChild(tdHighscore20);
+	trHighscore2.appendChild(tdHighscore21);
+	trHighscore2.appendChild(tdHighscore22);
+	
+	
+	var hsTimeNormal;
+	var hsTimeMaster;
+	
+	if(hsMinutesNormal == 'N/A'){
+		hsTimeNormal = 'N/A';
+	} else {
+		hsTimeNormal = (hsMinutesNormal ? (hsMinutesNormal > 9 ? hsMinutesNormal : "0" + hsMinutesNormal) : "00") + ":" + (hsSecondsNormal > 9 ? hsSecondsNormal : "0" + hsSecondsNormal);
+	}
+	
+	if(hsMinutesMaster == 'N/A'){
+		hsTimeMaster = 'N/A';
+	} else {
+		hsTimeMaster = (hsMinutesMaster ? (hsMinutesMaster > 9 ? hsMinutesMaster : "0" + hsMinutesMaster) : "00") + ":" + (hsSecondsMaster > 9 ? hsSecondsMaster : "0" + hsSecondsMaster);
+	}
+	
+	tdHighscore30 = document.createElement('TD');
+	tdHighscore30.appendChild(document.createTextNode('Beste Zeit:'));
+	tdHighscore31 = document.createElement('TD');
+	tdHighscore31.appendChild(document.createTextNode(hsTimeNormal));
+	tdHighscore32 = document.createElement('TD');
+	tdHighscore32.appendChild(document.createTextNode(hsTimeMaster));
+	
+	trHighscore3.appendChild(tdHighscore30);
+	trHighscore3.appendChild(tdHighscore31);
+	trHighscore3.appendChild(tdHighscore32);
+	
+	divManualHighscoreText.appendChild(tableHighscore);
+	
+	//divManualHighscoreText.appendChild(divScores);
 }
 
 function outputHighscores(){
@@ -1000,6 +1075,7 @@ function setHighscore(){
 					}
 				}
 			}
+		// Highscores für Master
 		} else {
 			
 			// Anzahl der Spiele
@@ -1007,7 +1083,8 @@ function setHighscore(){
 			if(localStorage.getItem('hsGamesMaster') == null){
 				localStorage.setItem('hsGamesMaster', 1);
 			}else{
-				allGames = localStorage.getItem('hsGamesMaster') + 1;
+				allGames = localStorage.getItem('hsGamesMaster');
+				allGames++;
 				localStorage.setItem('hsGamesMaster', allGames);
 			}
 			
