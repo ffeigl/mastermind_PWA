@@ -158,6 +158,7 @@ function btnSinglePlayerHandler(){
 	removeGameModeInfo();
 	removeRoundsSelect();
 	removeGameStartButton();
+	removeManualHighscoreText();
 	
 	roundsSelect.value = '';
 	
@@ -170,6 +171,7 @@ function btnTwoPlayerHandler(){
 	removeGameModeInfo();
 	removeRoundsSelect();
 	removeGameStartButton();
+	removeManualHighscoreText();
 	
 	generateGameModeSelect();
 	generateRoundsSelect();
@@ -203,6 +205,7 @@ function btnManualHandler(){
 	removeGameModeInfo();
 	removeRoundsSelect();
 	removeGameStartButton();
+	removeManualHighscoreText();
 	
 	console.log('Anleitung');
 }
@@ -212,6 +215,7 @@ function btnHighscoreHandler(){
 	removeGameModeInfo();
 	removeRoundsSelect();
 	removeGameStartButton();
+	removeManualHighscoreText();
 	
 	var hsGamesNormal;
 	var hsTriesNormal;
@@ -224,6 +228,7 @@ function btnHighscoreHandler(){
 	
 	getHighscores();
 	outputHighscores();
+	generateHighscores();
 	
 	
 }
@@ -291,6 +296,65 @@ function getHighscores(){
 	}else{
 		hsSecondsMaster = localStorage.getItem('hsSecondsMaster');
 	}
+}
+
+function generateHighscores(){
+	var divTitle = document.createElement('DIV');
+	divTitle.className = 'table';
+	divTitle.style.textAlign = 'center';
+	
+	var divDifficultyTitle = document.createElement('DIV');
+	var divNumberOfGamesTitle = document.createElement('DIV');
+	var divLeastTriesTitle = document.createElement('DIV');
+	var divBestTimeTitle = document.createElement('DIV');
+	
+	divDifficultyTitle.innerHTML = '\xa0';
+	divNumberOfGamesTitle.innerHTML = '<b>Spiele:</b>';
+	divLeastTriesTitle.innerHTML = '<b>Wenigste Versuche:</b>';
+	divBestTimeTitle.innerHTML = '<b>Schnellste Zeit:</b>';
+	
+	divTitle.appendChild(divDifficultyTitle);
+	divTitle.appendChild(divNumberOfGamesTitle);
+	divTitle.appendChild(divLeastTriesTitle);
+	divTitle.appendChild(divBestTimeTitle);
+	
+	var divScores = document.createElement('DIV');
+	divScores.style.textAlign = 'center';
+	
+	var divDifficulty = document.createElement('DIV');
+	var divNumberOfGames = document.createElement('DIV');
+	var divLeastTries = document.createElement('DIV');
+	var divBestTime = document.createElement('DIV');
+	
+	divDifficulty.innerHTML = 'Normal' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Master';
+	divNumberOfGames.innerHTML = hsGamesNormal + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + hsGamesMaster;
+	divLeastTries.innerHTML = hsTriesNormal + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + hsTriesMaster;
+	
+	var hsTimeNormal;
+	var hsTimeMaster;
+	
+	if(hsMinutesNormal == 'N/A'){
+		hsTimeNormal = 'N/A';
+	} else {
+		hsTimeNormal = (hsMinutesNormal ? (hsMinutesNormal > 9 ? hsMinutesNormal : "0" + hsMinutesNormal) : "00") + ":" + (hsSecondsNormal > 9 ? hsSecondsNormal : "0" + hsSecondsNormal);
+	}
+	
+	if(hsMinutesMaster == 'N/A'){
+		hsTimeMaster = 'N/A';
+	} else {
+		hsTimeMaster = (hsMinutesMaster ? (hsMinutesMaster > 9 ? hsMinutesMaster : "0" + hsMinutesMaster) : "00") + ":" + (hsSecondsMaster > 9 ? hsSecondsMaster : "0" + hsSecondsMaster);
+	}
+	
+	divBestTime.innerHTML = hsTimeNormal + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + hsTimeMaster;
+	
+
+	divScores.appendChild(divDifficulty);
+	divScores.appendChild(divNumberOfGames);
+	divScores.appendChild(divLeastTries);
+	divScores.appendChild(divBestTime);
+	
+	divManualHighscoreText.appendChild(divTitle);
+	divManualHighscoreText.appendChild(divScores);
 }
 
 function outputHighscores(){
@@ -1215,6 +1279,7 @@ function removeMenu(){
 	removeRoundsSelect();
 	removeGameStartButton();
 	removeManualHighscoreButtons();
+	removeManualHighscoreText();
 }
 
 function removeGameModeButtons(){
@@ -1257,6 +1322,12 @@ function removeGameStartButton(){
 function removeManualHighscoreButtons(){
 	while(divManualHighscoreButtons.firstChild){
 		divManualHighscoreButtons.removeChild(divManualHighscoreButtons.firstChild);
+	}
+}
+
+function removeManualHighscoreText(){
+	while(divManualHighscoreText.firstChild){
+		divManualHighscoreText.removeChild(divManualHighscoreText.firstChild);
 	}
 }
 

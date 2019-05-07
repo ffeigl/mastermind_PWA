@@ -1,3 +1,7 @@
+#window{
+	font-family: Arial;
+}
+
 .btnMenu{
 	width: 105px;
 }
@@ -55,6 +59,9 @@
 	width: 210px;
 }
 
+#manualHighscoreText{
+	width: 315px;
+}
 
 #dialogOverlay{
 	display: none;
