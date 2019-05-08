@@ -161,7 +161,7 @@ function btnSinglePlayerHandler(){
 	generateGameModeSelect();
 	generateGameStartButton();
 	
-	divGameModeInfoDiv.style.border = '2px solid black';
+	divGameModeInfoDiv.style.border = '2px solid #595959';
 }
 
 function btnTwoPlayerHandler(){
@@ -178,7 +178,7 @@ function btnTwoPlayerHandler(){
 	generateRoundsSelect();
 	generateGameStartButton();
 	
-	divGameModeInfoDiv.style.border = '2px solid black';
+	divGameModeInfoDiv.style.border = '2px solid #595959';
 }
 
 function rdoNormalHandler(){
@@ -396,7 +396,7 @@ function generateHighscores(){
 	divManualHighscoreText.appendChild(tableHighscore);
 	divManualHighscoreText.appendChild(btnResetHighscore);
 	
-	divManualHighscoreText.style.border = '2px solid black';
+	divManualHighscoreText.style.border = '2px solid #595959';
 	
 }
 
@@ -640,12 +640,13 @@ function generateColorsInfo(){
 }
 
 function generateBtnCheck(){
-	var button = document.createElement('INPUT');
-	button.type = 'button';
-	button.value = 'Check!';
-	button.onclick = btnCheckHandler;
+	var btnCheck = document.createElement('INPUT');
+	btnCheck.type = 'button';
+	btnCheck.value = 'Check!';
+	btnCheck.style.width = document.getElementById('gameTable').offsetWidth + 'px';
+	btnCheck.onclick = btnCheckHandler;
 	
-	divTable.appendChild(button);
+	divTable.appendChild(btnCheck);
 	
 	lblTimer.innerHTML = '00:00';
 	lblTimer.id = 'timer';

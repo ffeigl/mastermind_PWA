@@ -1,5 +1,6 @@
 input{
 	font-family: Arial;
+	font-weight: bold;
 }
 
 #window{
@@ -13,7 +14,9 @@ input{
 }
 
 .highlightButtons{
-	background-color: green;
+	background-color: #595959;
+	border-color: #595959;
+	color: white;
 }
 
 .number{
@@ -71,10 +74,12 @@ input{
 
 #manualHighscoreText{
 	width: 296px;
+	background-color: #ffcc80;
 }
 
 #gameModeInfoDiv{
 	width: 296px;
+	background-color: #ffcc80;
 }
 
 #dialogOverlay{
