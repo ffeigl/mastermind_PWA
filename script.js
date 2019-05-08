@@ -9,15 +9,15 @@ function initMenu(){
 	generateManualHighscoreButtons();
 }
 
-function generateGameModeButtons(){	
+function generateGameModeButtons(){
 	var btnSinglePlayer = document.createElement('INPUT');
 	btnSinglePlayer.type = 'button';
-	btnSinglePlayer.className = 'btnMenu';
+	btnSinglePlayer.className = 'btnMenu ';
 	btnSinglePlayer.value = 'Ein Spieler';
 	btnSinglePlayer.onclick = btnSinglePlayerHandler;
 	
 	divGameModeButtons.appendChild(btnSinglePlayer);
-	
+
 	var btnTwoPlayer = document.createElement('INPUT');
 	btnTwoPlayer.type = 'button';
 	btnTwoPlayer.className = 'btnMenu';
@@ -35,7 +35,7 @@ function generateManualHighscoreButtons(){
 	btnManual.onclick = btnManualHandler;
 	
 	divManualHighscoreButtons.appendChild(btnManual);
-	
+
 	var btnHighscore = document.createElement('INPUT');
 	btnHighscore.type = 'button';
 	btnHighscore.className = 'btnMenu';
@@ -126,6 +126,7 @@ function generateGameStartButton(){
 	btnGameStart.value = 'Start';
 	btnGameStart.onclick = btnGameStartHandler;
 	btnGameStart.id = 'btnGameStart';
+	btnGameStart.className = 'btnMenu';
 	
 	divGameStartButton.appendChild(btnGameStart);
 }
@@ -151,10 +152,16 @@ function btnSinglePlayerHandler(){
 	removeGameStartButton();
 	removeManualHighscoreText();
 	
+	removeHighlightButton();
+	highlightButton(this);
+	
 	roundsSelect.value = '';
+	
 	
 	generateGameModeSelect();
 	generateGameStartButton();
+	
+	divGameModeInfoDiv.style.border = '2px solid black';
 }
 
 function btnTwoPlayerHandler(){
@@ -164,9 +171,14 @@ function btnTwoPlayerHandler(){
 	removeGameStartButton();
 	removeManualHighscoreText();
 	
+	removeHighlightButton();
+	highlightButton(this);
+	
 	generateGameModeSelect();
 	generateRoundsSelect();
 	generateGameStartButton();
+	
+	divGameModeInfoDiv.style.border = '2px solid black';
 }
 
 function rdoNormalHandler(){
@@ -198,6 +210,9 @@ function btnManualHandler(){
 	removeGameStartButton();
 	removeManualHighscoreText();
 	
+	removeHighlightButton();
+	highlightButton(this);
+	
 	console.log('Anleitung');
 }
 
@@ -207,6 +222,9 @@ function btnHighscoreHandler(){
 	removeRoundsSelect();
 	removeGameStartButton();
 	removeManualHighscoreText();
+	
+	removeHighlightButton();
+	highlightButton(this);
 	
 	var hsGamesNormal;
 	var hsTriesNormal;
@@ -380,6 +398,17 @@ function generateHighscores(){
 	
 	divManualHighscoreText.style.border = '2px solid black';
 	
+}
+
+function removeHighlightButton(){
+	var highlightedButtons = document.getElementsByClassName('highlightButtons');
+	for(var i = 0; i < highlightedButtons.length; i++){
+		highlightedButtons[i].className = 'btnMenu';
+	}
+}
+
+function highlightButton(button){
+	button.className = 'btnMenu highlightButtons';
 }
 
 // **********
@@ -1335,6 +1364,7 @@ function removeGameStartButton(){
 	while(divGameStartButton.firstChild){
 		divGameStartButton.removeChild(divGameStartButton.firstChild);
 	}
+	divGameModeInfoDiv.style.border = '';
 }
 
 function removeManualHighscoreButtons(){
@@ -1418,6 +1448,7 @@ function removeDialogBoxFoot(){
 
 // START
 var divGameModeButtons = document.getElementById('gameModeButtons');
+var divGameModeInfoDiv = document.getElementById('gameModeInfoDiv');
 var divGameModeSelect = document.getElementById('gameModeSelect');
 var divGameModeInfo = document.getElementById('gameModeInfo');
 var divRoundsSelect = document.getElementById('roundsSelect');

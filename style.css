@@ -9,6 +9,11 @@ input{
 
 .btnMenu{
 	width: 150px;
+	height: 30px;
+}
+
+.highlightButtons{
+	background-color: green;
 }
 
 .number{
@@ -61,10 +66,14 @@ input{
 }
 
 #btnGameStart{
-	width: 300px;
+	width: 296px;
 }
 
 #manualHighscoreText{
+	width: 296px;
+}
+
+#gameModeInfoDiv{
 	width: 296px;
 }
 
