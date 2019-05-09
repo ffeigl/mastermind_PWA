@@ -40,6 +40,7 @@ function generateManualHighscoreButtons(){
 	btnHighscore.type = 'button';
 	btnHighscore.className = 'btnMenu';
 	btnHighscore.value = 'Highscore';
+	btnHighscore.id = 'btnHighscore';
 	btnHighscore.onclick = btnHighscoreHandler;
 	
 	divManualHighscoreButtons.appendChild(btnHighscore);
@@ -195,7 +196,7 @@ function rdoNormalHandler(){
 function rdoMasterHandler(){
 	rdoMaster.checked = 'true';
 	
-	rows = 10;
+	rows = 12;
 	columns = 5;
 	colors = 8;
 	
@@ -239,9 +240,22 @@ function btnHighscoreHandler(){
 	generateHighscores();
 }
 
-function btnResetHighscoreHandler(){
-	localStorage.clear();
+function btnResetHighscoreNormalHandler(){
+	localStorage.removeItem('hsGamesNormal');
+	localStorage.removeItem('hsTriesNormal');
+	localStorage.removeItem('hsMinutesNormal');
+	localStorage.removeItem('hsSecondsNormal');
 	btnHighscoreHandler();
+	highlightButton(document.getElementById('btnHighscore'));
+}
+
+function btnResetHighscoreMasterHandler(){
+	localStorage.removeItem('hsGamesMaster');
+	localStorage.removeItem('hsTriesMaster');
+	localStorage.removeItem('hsMinutesMaster');
+	localStorage.removeItem('hsSecondsMaster');
+	btnHighscoreHandler();
+	highlightButton(document.getElementById('btnHighscore'));
 }
 
 function btnGameStartHandler(){
@@ -312,22 +326,24 @@ function generateHighscores(){
 	var tblBodyHighscore = document.createElement('TBODY');
 	tableHighscore.appendChild(tblBodyHighscore);
 	
-	trHighscore0 = document.createElement('TR');
-	trHighscore1 = document.createElement('TR');
-	trHighscore2 = document.createElement('TR');
-	trHighscore3 = document.createElement('TR');
+	var trHighscore0 = document.createElement('TR');
+	var trHighscore1 = document.createElement('TR');
+	var trHighscore2 = document.createElement('TR');
+	var trHighscore3 = document.createElement('TR');
+	var trHighscore4 = document.createElement('TR');
 	
 	tblBodyHighscore.appendChild(trHighscore0);
 	tblBodyHighscore.appendChild(trHighscore1);
 	tblBodyHighscore.appendChild(trHighscore2);
 	tblBodyHighscore.appendChild(trHighscore3);
+	tblBodyHighscore.appendChild(trHighscore4);
 	
-	tdHighscore00 = document.createElement('TD');
+	var tdHighscore00 = document.createElement('TD');
 	tdHighscore00.style.width = '100px';
-	tdHighscore01 = document.createElement('TD');
+	var tdHighscore01 = document.createElement('TD');
 	tdHighscore01.appendChild(document.createTextNode('Normal'));
 	tdHighscore01.style.width = '75px';
-	tdHighscore02 = document.createElement('TD');
+	var tdHighscore02 = document.createElement('TD');
 	tdHighscore02.appendChild(document.createTextNode('Master'));
 	tdHighscore02.style.width = '75px';
 	
@@ -335,22 +351,22 @@ function generateHighscores(){
 	trHighscore0.appendChild(tdHighscore01);
 	trHighscore0.appendChild(tdHighscore02);
 	
-	tdHighscore10 = document.createElement('TD');
+	var tdHighscore10 = document.createElement('TD');
 	tdHighscore10.appendChild(document.createTextNode('Spiele:'));
-	tdHighscore11 = document.createElement('TD');
+	var tdHighscore11 = document.createElement('TD');
 	tdHighscore11.appendChild(document.createTextNode(hsGamesNormal));
-	tdHighscore12 = document.createElement('TD');
+	var tdHighscore12 = document.createElement('TD');
 	tdHighscore12.appendChild(document.createTextNode(hsGamesMaster));
 	
 	trHighscore1.appendChild(tdHighscore10);
 	trHighscore1.appendChild(tdHighscore11);
 	trHighscore1.appendChild(tdHighscore12);
 	
-	tdHighscore20 = document.createElement('TD');
+	var tdHighscore20 = document.createElement('TD');
 	tdHighscore20.appendChild(document.createTextNode('Versuche:'));
-	tdHighscore21 = document.createElement('TD');
+	var tdHighscore21 = document.createElement('TD');
 	tdHighscore21.appendChild(document.createTextNode(hsTriesNormal));
-	tdHighscore22 = document.createElement('TD');
+	var tdHighscore22 = document.createElement('TD');
 	tdHighscore22.appendChild(document.createTextNode(hsTriesMaster));
 	
 	trHighscore2.appendChild(tdHighscore20);
@@ -373,28 +389,49 @@ function generateHighscores(){
 		hsTimeMaster = (hsMinutesMaster ? (hsMinutesMaster > 9 ? hsMinutesMaster : "0" + hsMinutesMaster) : "00") + ":" + (hsSecondsMaster > 9 ? hsSecondsMaster : "0" + hsSecondsMaster);
 	}
 	
-	tdHighscore30 = document.createElement('TD');
+	var tdHighscore30 = document.createElement('TD');
 	tdHighscore30.appendChild(document.createTextNode('Zeit:'));
-	tdHighscore31 = document.createElement('TD');
+	var tdHighscore31 = document.createElement('TD');
 	tdHighscore31.appendChild(document.createTextNode(hsTimeNormal));
-	tdHighscore32 = document.createElement('TD');
+	var tdHighscore32 = document.createElement('TD');
 	tdHighscore32.appendChild(document.createTextNode(hsTimeMaster));
 	
 	trHighscore3.appendChild(tdHighscore30);
 	trHighscore3.appendChild(tdHighscore31);
 	trHighscore3.appendChild(tdHighscore32);
 	
+	var tdHighscore40 = document.createElement('TD');
+	var tdHighscore41 = document.createElement('TD');
+	var tdHighscore42 = document.createElement('TD');
+	
+	var btnNormalReset = document.createElement('INPUT');
+	btnNormalReset.type = 'button';
+	btnNormalReset.value = '\u274c';
+	btnNormalReset.className = 'resetHighscore';
+	btnNormalReset.onclick = btnResetHighscoreNormalHandler;
+	tdHighscore41.appendChild(btnNormalReset);
+	
+	var btnMasterReset = document.createElement('INPUT');
+	btnMasterReset.type = 'button';
+	btnMasterReset.value = '\u274c';
+	btnMasterReset.className = 'resetHighscore';
+	btnMasterReset.onclick = btnResetHighscoreMasterHandler;
+	tdHighscore42.appendChild(btnMasterReset);
+	
+	trHighscore4.appendChild(tdHighscore40);
+	trHighscore4.appendChild(tdHighscore41);
+	trHighscore4.appendChild(tdHighscore42);
 	
 	// *** TEST ***
-	var btnResetHighscore = document.createElement('INPUT');
+	/**var btnResetHighscore = document.createElement('INPUT');
 	btnResetHighscore.type = 'button';
 	btnResetHighscore.className = 'btnMenu';
 	btnResetHighscore.value = 'Highscores zurücksetzen';
 	btnResetHighscore.style.width = '296px';
 	btnResetHighscore.onclick = btnResetHighscoreHandler;
-	
+	**/
 	divManualHighscoreText.appendChild(tableHighscore);
-	divManualHighscoreText.appendChild(btnResetHighscore);
+	//divManualHighscoreText.appendChild(btnResetHighscore);
 	
 	divManualHighscoreText.style.border = '2px solid #595959';
 	
@@ -423,6 +460,7 @@ function initCodeSelect(){
 		currentGame++;
 	}
 	generateCodeSelectTable();
+	generateCodeColorsInfo();
 	generateCodeSelectButton();
 	generateCodeErrorMessage();
 	
@@ -444,9 +482,11 @@ function generateCodeSelectTable(){
 	
 	divCodeSelect.appendChild(divGameNr);
 	divCodeSelect.appendChild(divPlayerNr);
+	divCodeSelect.appendChild(divCodeColorsInfo);
 
 	var table = document.createElement('TABLE');
 	table.border = 1;
+	table.id = 'codeSelectTable';
 	var tableBody = document.createElement('TBODY');
 	table.appendChild(tableBody);
 	trCustomCode = document.createElement('TR');
@@ -466,10 +506,33 @@ function generateCodeSelectTable(){
 	
 }
 
+function generateCodeColorsInfo(){
+	var tblColorsInfo = document.createElement('TABLE');
+	tblColorsInfo.style.width = document.getElementById('codeSelectTable').offsetWidth + 'px';
+	tblColorsInfo.style.height = '25px';
+	
+	var tblBodyColorsInfo = document.createElement('TBODY');
+	tblColorsInfo.appendChild(tblBodyColorsInfo);
+	
+	var colorsTR = document.createElement('TR');
+	
+	for (var i = 0; i < colors; i++){
+		var colorsTD = document.createElement('TD');
+		
+		colorsTR.appendChild(colorsTD);
+		colorsTD.style.backgroundColor = assignColor(i);
+		tblBodyColorsInfo.appendChild(colorsTR);
+	}
+	
+	tblColorsInfo.style.display = 'inline-box';
+	divCodeColorsInfo.appendChild(tblColorsInfo);
+}
+
 function generateCodeSelectButton(){
 	var button = document.createElement('INPUT');
 	button.type = 'button';
-	button.value = 'Code setzen';
+	button.value = 'Kombination setzen';
+	button.style.width = document.getElementById('codeSelectTable').offsetWidth + 'px';
 	button.onclick = btnSetCodeHandler;
 	
 	divCodeSelect.appendChild(button);
@@ -546,7 +609,7 @@ function generateGameInfo(){
 		currentPlayer = 2;
 	}
 	
-	divGameNr.innerHTML = 'Runde ' + currentGame;
+	divGameNr.innerHTML = 'Runde <b>' + currentGame + '</b> / ' + numberOfGames;
 	divPlayerNr.innerHTML = '<b>Spieler ' + currentPlayer + '</b>';
 	
 	divCurrentPlayer.appendChild(divGameNr);
@@ -624,8 +687,6 @@ function generateColorsInfo(){
 	var tblBodyColorsInfo = document.createElement('TBODY');
 	tblColorsInfo.appendChild(tblBodyColorsInfo);
 	
-	var colorsArray = [0,0,0,0,0,0,0,0];
-	
 	for (var i = 0; i < colors; i++){
 		var colorsTR = document.createElement('TR');
 		var colorsTD = document.createElement('TD');
@@ -642,7 +703,7 @@ function generateColorsInfo(){
 function generateBtnCheck(){
 	var btnCheck = document.createElement('INPUT');
 	btnCheck.type = 'button';
-	btnCheck.value = 'Check!';
+	btnCheck.value = 'Überprüfen';
 	btnCheck.style.width = document.getElementById('gameTable').offsetWidth + 'px';
 	btnCheck.onclick = btnCheckHandler;
 	
@@ -664,16 +725,22 @@ function generateGameErrorMessage(){
 }
 
 function generateSolution(){
+	var tblSolution = document.createElement('TABLE');
+	tblSolution.style.width = document.getElementById('gameTable').offsetWidth + 'px';
+	tblSolution.style.height = '25px';
+	
+	var tblBodySolution = document.createElement('TBODY');
+	tblSolution.appendChild(tblBodySolution);
+	
 	var solutionRow = document.createElement('TR');
 	
 	for (var i = 0; i < columns; i++){
 		var solutionTD = document.createElement('TD');
 		solutionTD.style.background = code[i];
-		solutionTD.width = '53.6';
-		solutionTD.height = '42.8';
 		solutionRow.appendChild(solutionTD);
 	}
-	divSolution.appendChild(solutionRow);
+	tblBodySolution.appendChild(solutionRow);
+	divSolution.appendChild(tblSolution);
 	
 }
 
@@ -1459,6 +1526,7 @@ var divManualHighscoreText = document.getElementById('manualHighscoreText');
 
 var roundsSelect = document.createElement('SELECT');
 
+var divCodeColorsInfo = document.createElement('DIV');
 var divCodeSelect = document.getElementById('codeSelect');
 var divCodeErrorMessage = document.getElementById('codeErrorMessage');
 var trCustomCode;
