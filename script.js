@@ -227,10 +227,12 @@ function btnHighscoreHandler(){
 	removeHighlightButton();
 	highlightButton(this);
 	
+	var hsWinsNormal;
 	var hsGamesNormal;
 	var hsTriesNormal;
 	var hsMinutesNormal;
 	var hsSecondsNormal;
+	var hsWinsMaster;
 	var hsGamesMaster;
 	var hsTriesMaster;
 	var hsMinutesMaster;
@@ -241,6 +243,7 @@ function btnHighscoreHandler(){
 }
 
 function btnResetHighscoreNormalHandler(){
+	localStorage.removeItem('hsWinsNormal');
 	localStorage.removeItem('hsGamesNormal');
 	localStorage.removeItem('hsTriesNormal');
 	localStorage.removeItem('hsMinutesNormal');
@@ -250,6 +253,7 @@ function btnResetHighscoreNormalHandler(){
 }
 
 function btnResetHighscoreMasterHandler(){
+	localStorage.removeItem('hsWinsMaster');
 	localStorage.removeItem('hsGamesMaster');
 	localStorage.removeItem('hsTriesMaster');
 	localStorage.removeItem('hsMinutesMaster');
@@ -270,6 +274,12 @@ function btnGameStartHandler(){
 }
 
 function getHighscores(){
+	if(localStorage.getItem('hsWinsNormal') == null){
+		hsWinsNormal = 0;
+	}else{
+		hsWinsNormal = localStorage.getItem('hsWinsNormal');
+	}
+	
 	if(localStorage.getItem('hsGamesNormal') == null){
 		hsGamesNormal = 0;
 	}else{
@@ -292,6 +302,13 @@ function getHighscores(){
 		hsSecondsNormal = 'N/A';
 	}else{
 		hsSecondsNormal = localStorage.getItem('hsSecondsNormal');
+	}
+	
+	
+	if(localStorage.getItem('hsWinsMaster') == null){
+		hsWinsMaster = 0;
+	}else{
+		hsWinsMaster = localStorage.getItem('hsWinsMaster');
 	}
 	
 	if(localStorage.getItem('hsGamesMaster') == null){
@@ -354,9 +371,9 @@ function generateHighscores(){
 	var tdHighscore10 = document.createElement('TD');
 	tdHighscore10.appendChild(document.createTextNode('Spiele:'));
 	var tdHighscore11 = document.createElement('TD');
-	tdHighscore11.appendChild(document.createTextNode(hsGamesNormal));
+	tdHighscore11.appendChild(document.createTextNode(hsWinsNormal + ' / ' + hsGamesNormal));
 	var tdHighscore12 = document.createElement('TD');
-	tdHighscore12.appendChild(document.createTextNode(hsGamesMaster));
+	tdHighscore12.appendChild(document.createTextNode(hsWinsMaster + ' / ' + hsGamesMaster));
 	
 	trHighscore1.appendChild(tdHighscore10);
 	trHighscore1.appendChild(tdHighscore11);
@@ -887,7 +904,7 @@ function btnCheckHandler(){
 				assignClickHandler();
 				generateSolution();
 				stopTimer();
-				setHighscore();
+				setHighscore('Win');
 				dialog.render();
 			} else {
 				if(currentRow > 0){
@@ -896,6 +913,7 @@ function btnCheckHandler(){
 				} else {
 					generateSolution();
 					stopTimer();
+					setHighscore('Loss');
 					dialog.render();
 				}
 			}
@@ -1073,82 +1091,121 @@ function showGameErrorMessage(errorMessage){
 	divGameError.innerHTML = errorMessage;
 }
 
-function setHighscore(){
+function setHighscore(score){
 	if(numberOfGames == ''){
-		// Highscores für Normal
-		if(columns == 4){
+		if(score == 'Win'){
+			// Highscores für Normal
+			if(columns == 4){
 			
-			// Anzahl der Spiele
-			var allGames;
-			if(localStorage.getItem('hsGamesNormal') == null){
-				localStorage.setItem('hsGamesNormal', 1);
-			}else{
-				allGames = localStorage.getItem('hsGamesNormal');
-				allGames++;
-				localStorage.setItem('hsGamesNormal', allGames);
-			}
-			
-			// Wenigste Versuche
-			var triesNeeded = rows-currentRow;
-			if(localStorage.getItem('hsTriesNormal') == null){
-				localStorage.setItem('hsTriesNormal', triesNeeded);
-			} else {
-				if(triesNeeded < localStorage.getItem('hsTriesNormal')){
-					localStorage.setItem('hsTriesNormal', triesNeeded);
+				// Anzahl der Spiele
+				var wins;
+				if(localStorage.getItem('hsWinsNormal') == null){
+					localStorage.setItem('hsWinsNormal', 1);
+				}else{
+					wins = localStorage.getItem('hsWinsNormal');
+					wins++;
+					localStorage.setItem('hsWinsNormal', wins);
 				}
-			}
 			
-			// Beste Zeit
-			if(localStorage.getItem('hsMinutesNormal') == null){
-				localStorage.setItem('hsMinutesNormal', minutes);
-				localStorage.setItem('hsSecondsNormal', seconds);
-			} else {
-				if(minutes < localStorage.getItem('hsMinutesNormal')){
+				var allGames;
+				if(localStorage.getItem('hsGamesNormal') == null){
+					localStorage.setItem('hsGamesNormal', 1);
+				}else{
+					allGames = localStorage.getItem('hsGamesNormal');
+					allGames++;
+					localStorage.setItem('hsGamesNormal', allGames);
+				}
+			
+				// Wenigste Versuche
+				var triesNeeded = rows-currentRow;
+				if(localStorage.getItem('hsTriesNormal') == null){
+					localStorage.setItem('hsTriesNormal', triesNeeded);
+				} else {
+					if(triesNeeded < localStorage.getItem('hsTriesNormal')){
+						localStorage.setItem('hsTriesNormal', triesNeeded);
+					}
+				}
+			
+				// Beste Zeit
+				if(localStorage.getItem('hsMinutesNormal') == null){
 					localStorage.setItem('hsMinutesNormal', minutes);
 					localStorage.setItem('hsSecondsNormal', seconds);
 				} else {
-					if(minutes == localStorage.getItem('hsMinutesNormal') && seconds < localStorage.getItem('hsSecondsNormal')){
+					if(minutes < localStorage.getItem('hsMinutesNormal')){
 						localStorage.setItem('hsMinutesNormal', minutes);
 						localStorage.setItem('hsSecondsNormal', seconds);
+					} else {
+						if(minutes == localStorage.getItem('hsMinutesNormal') && seconds < localStorage.getItem('hsSecondsNormal')){
+							localStorage.setItem('hsMinutesNormal', minutes);
+							localStorage.setItem('hsSecondsNormal', seconds);
+						}
 					}
 				}
-			}
-		// Highscores für Master
-		} else {
-			
-			// Anzahl der Spiele
-			var allGames;
-			if(localStorage.getItem('hsGamesMaster') == null){
-				localStorage.setItem('hsGamesMaster', 1);
-			}else{
-				allGames = localStorage.getItem('hsGamesMaster');
-				allGames++;
-				localStorage.setItem('hsGamesMaster', allGames);
-			}
-			
-			// Wenigste Versuche
-			var triesNeeded = rows-currentRow;
-			if(localStorage.getItem('hsTriesMaster') == null){
-				localStorage.setItem('hsTriesMaster', triesNeeded);
+			// Highscores für Master
 			} else {
-				if(triesNeeded < localStorage.getItem('hsTriesMaster')){
-					localStorage.setItem('hsTriesMaster', triesNeeded);
+			
+				// Anzahl der Spiele
+				var wins;
+				if(localStorage.getItem('hsWinsMaster') == null){
+					localStorage.setItem('hsWinsMaster', 1);
+				}else{
+					wins = localStorage.getItem('hsWinsMaster');
+					wins++;
 				}
-			}
 			
-			// Beste Zeit
-			if(localStorage.getItem('hsMinutesMaster') == null){
-				localStorage.setItem('hsMinutesMaster', minutes);
-				localStorage.setItem('hsSecondsMaster', seconds);
-			} else {
-				if(minutes < localStorage.getItem('hsMinutesMaster')){
+				var allGames;
+				if(localStorage.getItem('hsGamesMaster') == null){
+					localStorage.setItem('hsGamesMaster', 1);
+				}else{
+					allGames = localStorage.getItem('hsGamesMaster');
+					allGames++;
+					localStorage.setItem('hsGamesMaster', allGames);
+				}
+			
+				// Wenigste Versuche
+				var triesNeeded = rows-currentRow;
+				if(localStorage.getItem('hsTriesMaster') == null){
+					localStorage.setItem('hsTriesMaster', triesNeeded);
+				} else {
+					if(triesNeeded < localStorage.getItem('hsTriesMaster')){
+						localStorage.setItem('hsTriesMaster', triesNeeded);
+					}
+				}
+			
+				// Beste Zeit
+				if(localStorage.getItem('hsMinutesMaster') == null){
 					localStorage.setItem('hsMinutesMaster', minutes);
 					localStorage.setItem('hsSecondsMaster', seconds);
 				} else {
-					if(minutes == localStorage.getItem('hsMinutesMaster') && seconds < localStorage.getItem('hsSecondsMaster')){
+					if(minutes < localStorage.getItem('hsMinutesMaster')){
 						localStorage.setItem('hsMinutesMaster', minutes);
 						localStorage.setItem('hsSecondsMaster', seconds);
+					} else {
+						if(minutes == localStorage.getItem('hsMinutesMaster') && seconds < localStorage.getItem('hsSecondsMaster')){
+							localStorage.setItem('hsMinutesMaster', minutes);
+							localStorage.setItem('hsSecondsMaster', seconds);
+						}
 					}
+				}
+			}
+		} else {
+			if(columns == 4){
+				var allGames;
+				if(localStorage.getItem('hsGamesNormal') == null){
+					localStorage.setItem('hsGamesNormal', 1);
+				}else{
+					allGames = localStorage.getItem('hsGamesNormal');
+					allGames++;
+					localStorage.setItem('hsGamesNormal', allGames);
+				}
+			} else {
+				var allGames;
+				if(localStorage.getItem('hsGamesMaster') == null){
+					localStorage.setItem('hsGamesMaster', 1);
+				}else{
+					allGames = localStorage.getItem('hsGamesMaster');
+					allGames++;
+					localStorage.setItem('hsGamesMaster', allGames);
 				}
 			}
 		}
