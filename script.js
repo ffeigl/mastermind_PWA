@@ -214,7 +214,7 @@ function btnManualHandler(){
 	removeHighlightButton();
 	highlightButton(this);
 	
-	console.log('Anleitung');
+	generateManual();
 }
 
 function btnHighscoreHandler(){
@@ -271,6 +271,87 @@ function btnGameStartHandler(){
 		initCodeSelect();
 	}
 	
+}
+
+function generateManual(){
+	var divManual = document.createElement('DIV');
+	
+	divManual.style.overflow = 'auto';
+	divManual.style.height = '250px';
+	divManual.style.width = '296px';
+	divManual.style.background = '#ffcc80';
+	divManual.style.border = '2px solid #595959';
+	
+	var pTitle = document.createElement('P');
+	pTitle.style.fontSize = '25px';
+	pTitle.innerHTML = '<b>Mastermind</b>';
+	
+	var pGeneral = document.createElement('P');
+	pGeneral.innerHTML = 'Mastermind ist ein Spiel für einen oder zwei Spieler. ' +
+	'Ziel des Spieles ist es, innerhalb einer bestimmten Anzahl von Versuchen eine Farbkombination herauszufinden. ' +
+	'Je nach Spielmodus unterscheiden sich die Anzahl der Versuche, die Länge der Farbkombination und die Anzahl der möglichen Farben. ' +
+	'Bei der Farbkombination darf keine Farbe doppelt vorkommen. </br>' +
+	'Die möglichen Farben werden am Rand des Spielfelds angezeigt. ' +
+	'Mit einem Linksklick werden die Farben von oben nach unten durchgewechselt, mit einem Rechtsklick von unten nach oben.';
+	
+	var pGameMode = document.createElement('P');
+	pGameMode.style.fontSize = '20px';
+	pGameMode.innerHTML = '<b>Spielmodi</b>';
+	
+	var pGameModeOnePlayer = document.createElement('P');
+	pGameModeOnePlayer.innerHTML = '<b>Ein Spieler</b> </br>' +
+	'Bei diesem Spielmodus wird die Farbkombination zufällig vom Computer generiert. ' +
+	'Der Spieler versucht diese mit möglichst wenigen Versuchen in der kürzest möglichen Zeit herauszufinden. ' + 
+	'Schafft er dies innerhalb der Anzahl der Versuche gewinnt er das Spiel. ' + 
+	'Die Anzahl der Spiele, die wenigste Anzahl von Versuchen und die schnellste Zeit werden als Highscore gespeichert.';
+	
+	var pGameModeTwoPlayer = document.createElement('P');
+	pGameModeTwoPlayer.innerHTML = '<b>Zwei Spieler</b> </br>' + 
+	'Hier spielen zwei Spieler gegeneinander. Es wird im Vorfeld die Anzahl der Runden festgelgt (immer eine gerade Anzahl). ' +
+	'Spieler 1 wählt nun eine Farbkombination aus. Sobald er diese eingestellt hat, versucht Spieler 2 die Kombination herauszufinden. ' +
+	'Schafft er dies innerhalb der Anzahl der Versuche, bekommt Spieler 2 einen Punkt; andernfalls geht der Punkt an Spieler 1. ' +
+	'In der nächsten Runde wählt Spieler 2 eine Farbkombination aus und Spieler 1 versucht diese herauszufinden. </br>' + 
+	'Wenn alle vorher festgelegten Runden gespielt wurden, werden die Punktzahl, die durchschnittliche Anzahl der Versuche und die durchschnittliche Zeit berechnet und ausgegeben. ' +
+	'Ebenfalls wird der Gewinner bestimmt. Gewonnen hat der Spieler mit den meisten Punkten. ' +
+	'Wenn beide Spieler die gleiche Anzahl an Punkten haben, gewinnt der Spieler, der im Durchschnitt weniger Versuche gebraucht hat. ' +
+	'Sollte auch dieser Wert identisch sein, gewinnt der Spieler, der im Durchschnitt weniger Zeit gebraucht hat.';
+	
+	var pDifficulty = document.createElement('P');
+	pDifficulty.style.fontSize = '20px';
+	pDifficulty.innerHTML = '<b>Schwierigkeitsgrade</b>';
+	
+	var pDifficultyNormal = document.createElement('P');
+	pDifficultyNormal.innerHTML = '<b>Normal</b> </br>' + 
+	'Beim Schwierigkeitsgrad Normal besteht die Farbkombination aus 4 Farben aus einer Auswahl von 6 Farben. Der Spieler hat 8 Versuche, um die richtige Kombination herauszufinden.';
+	
+	var pDifficultyMaster = document.createElement('P');
+	pDifficultyMaster.innerHTML = '<b>Master</b> </br>' +
+	'Bei diesem Schwierigkeitsgrad besteht die Farbkombination aus 5 Farben aus einer Auswahl von 8 Farben. In diesem Fall hat der Spieler 12 Versuche, um die Kombination herauszufinden.';
+	
+	var pHighscore = document.createElement('P');
+	pHighscore.style.fontSize = '20px';
+	pHighscore.innerHTML = '<b>Highscore</b>';
+	
+	var pHighscoreText = document.createElement('P');
+	pHighscoreText.innerHTML = 'Im Highscore werden ausschließlich Daten aus dem Spielmodus "Ein Spieler" gespeichert. ' +
+	'Die Daten werden für jeden Schwierigkeitsgrad seperat gespeichert. ' +
+	'Es werden die Anzahl der gewonnenen Spiele in Relation zur insgesamten Anzahl der Spiele, die wenigsten gebrauchten Versuche in einem Spiel und die schnellste Zeit in einem Spiel gespeichert. ' +
+	'Die Highscores für jeden Schwierigkeitsgrad können über die entsprechenden Buttons zurückgesetzt werden. </br>' +
+	'Die Daten werden nur lokal im Browser gespeichert. ' +
+	'Wird das Spiel auf einem anderen Gerät, oder am gleichen Gerät mit einem anderen Browser aufgerufen, sind die Highscores nicht verfügbar.';
+	
+	divManual.appendChild(pTitle);
+	divManual.appendChild(pGeneral);
+	divManual.appendChild(pGameMode);
+	divManual.appendChild(pGameModeOnePlayer);
+	divManual.appendChild(pGameModeTwoPlayer);
+	divManual.appendChild(pDifficulty);
+	divManual.appendChild(pDifficultyNormal);
+	divManual.appendChild(pDifficultyMaster);
+	divManual.appendChild(pHighscore);
+	divManual.appendChild(pHighscoreText);
+	
+	divManualHighscoreText.appendChild(divManual);
 }
 
 function getHighscores(){
@@ -358,10 +439,17 @@ function generateHighscores(){
 	var tdHighscore00 = document.createElement('TD');
 	tdHighscore00.style.width = '100px';
 	var tdHighscore01 = document.createElement('TD');
-	tdHighscore01.appendChild(document.createTextNode('Normal'));
+	var tdBold01 = document.createElement('STRONG');
+	var tdText01 = document.createTextNode('Normal');
+	tdBold01.appendChild(tdText01);
+	tdHighscore01.appendChild(tdBold01);
 	tdHighscore01.style.width = '75px';
 	var tdHighscore02 = document.createElement('TD');
-	tdHighscore02.appendChild(document.createTextNode('Master'));
+	var tdBold02 = document.createElement('STRONG');
+	var tdText02 = document.createTextNode('Master');
+	tdBold02.appendChild(tdText02);
+	tdHighscore02.appendChild(tdBold02);
+	
 	tdHighscore02.style.width = '75px';
 	
 	trHighscore0.appendChild(tdHighscore00);
@@ -369,7 +457,11 @@ function generateHighscores(){
 	trHighscore0.appendChild(tdHighscore02);
 	
 	var tdHighscore10 = document.createElement('TD');
-	tdHighscore10.appendChild(document.createTextNode('Spiele:'));
+	tdHighscore10.style.textAlign = 'right';
+	var tdBold10 = document.createElement('STRONG');
+	var tdText10 = document.createTextNode('gew. Spiele:');
+	tdBold10.appendChild(tdText10);
+	tdHighscore10.appendChild(tdBold10);
 	var tdHighscore11 = document.createElement('TD');
 	tdHighscore11.appendChild(document.createTextNode(hsWinsNormal + ' / ' + hsGamesNormal));
 	var tdHighscore12 = document.createElement('TD');
@@ -380,7 +472,11 @@ function generateHighscores(){
 	trHighscore1.appendChild(tdHighscore12);
 	
 	var tdHighscore20 = document.createElement('TD');
-	tdHighscore20.appendChild(document.createTextNode('Versuche:'));
+	tdHighscore20.style.textAlign = 'right';
+	var tdBold20 = document.createElement('STRONG');
+	var tdText20 = document.createTextNode('min. Versuche:');
+	tdBold20.appendChild(tdText20);
+	tdHighscore20.appendChild(tdBold20);
 	var tdHighscore21 = document.createElement('TD');
 	tdHighscore21.appendChild(document.createTextNode(hsTriesNormal));
 	var tdHighscore22 = document.createElement('TD');
@@ -407,7 +503,11 @@ function generateHighscores(){
 	}
 	
 	var tdHighscore30 = document.createElement('TD');
-	tdHighscore30.appendChild(document.createTextNode('Zeit:'));
+	tdHighscore30.style.textAlign = 'right';
+	var tdBold30 = document.createElement('STRONG');
+	var tdText30 = document.createTextNode('min. Zeit:');
+	tdBold30.appendChild(tdText30);
+	tdHighscore30.appendChild(tdBold30);
 	var tdHighscore31 = document.createElement('TD');
 	tdHighscore31.appendChild(document.createTextNode(hsTimeNormal));
 	var tdHighscore32 = document.createElement('TD');
