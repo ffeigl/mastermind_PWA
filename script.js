@@ -1151,6 +1151,7 @@ function setHighscore(score){
 				}else{
 					wins = localStorage.getItem('hsWinsMaster');
 					wins++;
+					localStorage.setItem('hsWinsMaster', wins);
 				}
 			
 				var allGames;
