@@ -278,9 +278,11 @@ function generateManual(){
 	
 	divManual.style.overflow = 'auto';
 	divManual.style.height = '250px';
-	divManual.style.width = '296px';
+	divManual.style.width = '286px';
 	divManual.style.background = '#ffcc80';
 	divManual.style.border = '2px solid #595959';
+	divManual.style.paddingLeft = '5px';
+	divManual.style.paddingRight = '5px';
 	
 	var pTitle = document.createElement('P');
 	pTitle.style.fontSize = '25px';
@@ -288,9 +290,9 @@ function generateManual(){
 	
 	var pGeneral = document.createElement('P');
 	pGeneral.innerHTML = 'Mastermind ist ein Spiel für einen oder zwei Spieler. ' +
-	'Ziel des Spieles ist es, innerhalb einer bestimmten Anzahl von Versuchen eine Farbkombination herauszufinden. ' +
-	'Je nach Spielmodus unterscheiden sich die Anzahl der Versuche, die Länge der Farbkombination und die Anzahl der möglichen Farben. ' +
-	'Bei der Farbkombination darf keine Farbe doppelt vorkommen. </br>' +
+	'Ziel des Spieles ist es, innerhalb einer <b>bestimmten Anzahl von Versuchen</b> eine <b>Farbkombination herauszufinden</b>. ' +
+	'Je nach Schwierigkeitsgrad unterscheiden sich die Anzahl der Versuche, die Länge der Farbkombination und die Anzahl der möglichen Farben. ' +
+	'Bei der Farbkombination darf <b>keine Farbe doppelt</b> vorkommen. </br>' +
 	'Die möglichen Farben werden am Rand des Spielfelds angezeigt. ' +
 	'Mit einem Linksklick werden die Farben von oben nach unten durchgewechselt, mit einem Rechtsklick von unten nach oben.';
 	
@@ -299,45 +301,45 @@ function generateManual(){
 	pGameMode.innerHTML = '<b>Spielmodi</b>';
 	
 	var pGameModeOnePlayer = document.createElement('P');
-	pGameModeOnePlayer.innerHTML = '<b>Ein Spieler</b> </br>' +
-	'Bei diesem Spielmodus wird die Farbkombination zufällig vom Computer generiert. ' +
+	pGameModeOnePlayer.innerHTML = '<b><u>Ein Spieler</u></b> </br>' +
+	'Bei diesem Spielmodus wird die <b>Farbkombination zufällig vom Computer generiert</b>. ' +
 	'Der Spieler versucht diese mit möglichst wenigen Versuchen in der kürzest möglichen Zeit herauszufinden. ' + 
 	'Schafft er dies innerhalb der Anzahl der Versuche gewinnt er das Spiel. ' + 
-	'Die Anzahl der Spiele, die wenigste Anzahl von Versuchen und die schnellste Zeit werden als Highscore gespeichert.';
+	'Die besten Ergebnisse werden als Highscore gespeichert.';
 	
 	var pGameModeTwoPlayer = document.createElement('P');
-	pGameModeTwoPlayer.innerHTML = '<b>Zwei Spieler</b> </br>' + 
-	'Hier spielen zwei Spieler gegeneinander. Es wird im Vorfeld die Anzahl der Runden festgelgt (immer eine gerade Anzahl). ' +
+	pGameModeTwoPlayer.innerHTML = '<b><u>Zwei Spieler</u></b> </br>' + 
+	'Hier spielen zwei Spieler gegeneinander. Es wird im Vorfeld die <b>Anzahl der Runden</b> festgelgt (immer eine gerade Anzahl). ' +
 	'Spieler 1 wählt nun eine Farbkombination aus. Sobald er diese eingestellt hat, versucht Spieler 2 die Kombination herauszufinden. ' +
 	'Schafft er dies innerhalb der Anzahl der Versuche, bekommt Spieler 2 einen Punkt; andernfalls geht der Punkt an Spieler 1. ' +
 	'In der nächsten Runde wählt Spieler 2 eine Farbkombination aus und Spieler 1 versucht diese herauszufinden. </br>' + 
 	'Wenn alle vorher festgelegten Runden gespielt wurden, werden die Punktzahl, die durchschnittliche Anzahl der Versuche und die durchschnittliche Zeit berechnet und ausgegeben. ' +
-	'Ebenfalls wird der Gewinner bestimmt. Gewonnen hat der Spieler mit den meisten Punkten. ' +
-	'Wenn beide Spieler die gleiche Anzahl an Punkten haben, gewinnt der Spieler, der im Durchschnitt weniger Versuche gebraucht hat. ' +
-	'Sollte auch dieser Wert identisch sein, gewinnt der Spieler, der im Durchschnitt weniger Zeit gebraucht hat.';
+	'Ebenfalls wird der Gewinner bestimmt. <b>Gewonnen</b> hat der Spieler mit den <b>meisten Punkten</b>. ' +
+	'Wenn beide Spieler die gleiche Anzahl an Punkten haben, gewinnt der Spieler, der im <b>Durchschnitt weniger Versuche</b> gebraucht hat. ' +
+	'Sollte auch dieser Wert identisch sein, gewinnt der Spieler, der im <b>Durchschnitt weniger Zeit</b> gebraucht hat.';
 	
 	var pDifficulty = document.createElement('P');
 	pDifficulty.style.fontSize = '20px';
 	pDifficulty.innerHTML = '<b>Schwierigkeitsgrade</b>';
 	
 	var pDifficultyNormal = document.createElement('P');
-	pDifficultyNormal.innerHTML = '<b>Normal</b> </br>' + 
-	'Beim Schwierigkeitsgrad Normal besteht die Farbkombination aus 4 Farben aus einer Auswahl von 6 Farben. Der Spieler hat 8 Versuche, um die richtige Kombination herauszufinden.';
+	pDifficultyNormal.innerHTML = '<b><u>Normal</u></b> </br>' + 
+	'Beim Schwierigkeitsgrad Normal besteht die Farbkombination aus <b>4</b> Farben aus einer Auswahl von <b>6</b> Farben. Der Spieler hat <b>8</b> Versuche, um die richtige Kombination herauszufinden.';
 	
 	var pDifficultyMaster = document.createElement('P');
-	pDifficultyMaster.innerHTML = '<b>Master</b> </br>' +
-	'Bei diesem Schwierigkeitsgrad besteht die Farbkombination aus 5 Farben aus einer Auswahl von 8 Farben. In diesem Fall hat der Spieler 12 Versuche, um die Kombination herauszufinden.';
+	pDifficultyMaster.innerHTML = '<b><u>Master</u></b> </br>' +
+	'Bei diesem Schwierigkeitsgrad besteht die Farbkombination aus <b>5</b> Farben aus einer Auswahl von <b>8</b> Farben. In diesem Fall hat der Spieler <b>12</b> Versuche, um die Kombination herauszufinden.';
 	
 	var pHighscore = document.createElement('P');
 	pHighscore.style.fontSize = '20px';
 	pHighscore.innerHTML = '<b>Highscore</b>';
 	
 	var pHighscoreText = document.createElement('P');
-	pHighscoreText.innerHTML = 'Im Highscore werden ausschließlich Daten aus dem Spielmodus "Ein Spieler" gespeichert. ' +
-	'Die Daten werden für jeden Schwierigkeitsgrad seperat gespeichert. ' +
-	'Es werden die Anzahl der gewonnenen Spiele in Relation zur insgesamten Anzahl der Spiele, die wenigsten gebrauchten Versuche in einem Spiel und die schnellste Zeit in einem Spiel gespeichert. ' +
-	'Die Highscores für jeden Schwierigkeitsgrad können über die entsprechenden Buttons zurückgesetzt werden. </br>' +
-	'Die Daten werden nur lokal im Browser gespeichert. ' +
+	pHighscoreText.innerHTML = 'Im Highscore werden ausschließlich Daten aus dem <b>Spielmodus "Ein Spieler"</b> gespeichert. ' +
+	'Die Daten werden für jeden <b>Schwierigkeitsgrad seperat</b> gespeichert. ' +
+	'Es werden die Anzahl der <b>gewonnenen Spiele</b> in Relation zur <b>insgesamten Anzahl der Spiele</b>, die <b>wenigsten gebrauchten Versuche</b> in einem Spiel und die <b>schnellste Zeit</b> in einem Spiel gespeichert. ' +
+	'Die Highscores für jeden Schwierigkeitsgrad können über die <b>entsprechenden Buttons zurückgesetzt</b> werden. </br>' +
+	'Die Daten werden <b>nur lokal im Browser</b> gespeichert. ' +
 	'Wird das Spiel auf einem anderen Gerät, oder am gleichen Gerät mit einem anderen Browser aufgerufen, sind die Highscores nicht verfügbar.';
 	
 	divManual.appendChild(pTitle);
