@@ -243,23 +243,11 @@ function btnHighscoreHandler(){
 }
 
 function btnResetHighscoreNormalHandler(){
-	localStorage.removeItem('hsWinsNormal');
-	localStorage.removeItem('hsGamesNormal');
-	localStorage.removeItem('hsTriesNormal');
-	localStorage.removeItem('hsMinutesNormal');
-	localStorage.removeItem('hsSecondsNormal');
-	btnHighscoreHandler();
-	highlightButton(document.getElementById('btnHighscore'));
+	dialog.renderAcknowledge('normal');
 }
 
 function btnResetHighscoreMasterHandler(){
-	localStorage.removeItem('hsWinsMaster');
-	localStorage.removeItem('hsGamesMaster');
-	localStorage.removeItem('hsTriesMaster');
-	localStorage.removeItem('hsMinutesMaster');
-	localStorage.removeItem('hsSecondsMaster');
-	btnHighscoreHandler();
-	highlightButton(document.getElementById('btnHighscore'));
+	dialog.renderAcknowledge('master');
 }
 
 function btnGameStartHandler(){
@@ -540,17 +528,8 @@ function generateHighscores(){
 	trHighscore4.appendChild(tdHighscore40);
 	trHighscore4.appendChild(tdHighscore41);
 	trHighscore4.appendChild(tdHighscore42);
-	
-	// *** TEST ***
-	/**var btnResetHighscore = document.createElement('INPUT');
-	btnResetHighscore.type = 'button';
-	btnResetHighscore.className = 'btnMenu';
-	btnResetHighscore.value = 'Highscores zurücksetzen';
-	btnResetHighscore.style.width = '296px';
-	btnResetHighscore.onclick = btnResetHighscoreHandler;
-	**/
+
 	divManualHighscoreText.appendChild(tableHighscore);
-	//divManualHighscoreText.appendChild(btnResetHighscore);
 	
 	divManualHighscoreText.style.border = '2px solid #595959';
 	
@@ -823,10 +802,18 @@ function generateBtnCheck(){
 	var btnCheck = document.createElement('INPUT');
 	btnCheck.type = 'button';
 	btnCheck.value = 'Überprüfen';
-	btnCheck.style.width = document.getElementById('gameTable').offsetWidth + 'px';
+	btnCheck.style.width = document.getElementById('gameTable').offsetWidth*0.75 + 'px';
 	btnCheck.onclick = btnCheckHandler;
 	
 	divTable.appendChild(btnCheck);
+	
+	var btnSurrender = document.createElement('INPUT');
+	btnSurrender.type = 'button';
+	btnSurrender.value = 'Aufgeben';
+	btnSurrender.style.width = document.getElementById('gameTable').offsetWidth*0.25 + 'px';
+	btnSurrender.onclick = btnSurrenderHandler;
+	
+	divTable.appendChild(btnSurrender);
 	
 	lblTimer.innerHTML = '00:00';
 	lblTimer.id = 'timer';
@@ -1025,6 +1012,10 @@ function btnCheckHandler(){
 	} else {
 		showGameErrorMessage("Keine leeren Felder!");
 	}
+}
+
+function btnSurrenderHandler(){
+	dialog.renderAcknowledge();
 }
 
 // Methoden für Eventhandler
@@ -1360,7 +1351,7 @@ function Dialog(){
 			}
 			
 			if(currentPlayer != 0){
-				if(currentPlayer == 1){
+				if(currentPlayer == 2){
 					secondsPlayer2 = secondsPlayer2 + seconds;
 					minutesPlayer2 = minutesPlayer2 + minutes;
 					triesPlayer2 = triesPlayer2 + triesNeeded;
@@ -1446,6 +1437,41 @@ function Dialog(){
 		
 	}
 	
+	this.renderAcknowledge = function(test){
+		var winW = window.innerWidth;
+		var winH = window.innerHeight;
+		
+		divDialogOverlay.style.display = 'block';
+		divDialogOverlay.style.height = winH+'px';
+		divDialogBox.style.left = (winW/2) - (300 * .5)+'px';
+		divDialogBox.style.top = '150px';
+		divDialogBox.style.display = 'block';
+		
+		dialogBoxBody.innerHTML = 'Sind Sie sicher?';
+		
+		var btnYes = document.createElement('INPUT');
+		btnYes.type = 'button';
+		btnYes.value = 'Ja';
+		switch(test){
+			case 'normal':
+				btnYes.onclick = dialog.btnYesHandlerNormal;
+				break;
+			case 'master':
+				btnYes.onclick = dialog.btnYesHandlerMaster;
+				break;
+			default:
+				btnYes.onclick = dialog.btnYesHandler;
+		}
+		dialogBoxFoot.appendChild(btnYes);
+		
+		var btnNo = document.createElement('INPUT');
+		btnNo.type = 'button';
+		btnNo.value = 'Nein';
+		btnNo.onclick = dialog.btnNoHandler;
+		
+		dialogBoxFoot.appendChild(btnNo);
+	}
+	
 	this.btnNewNextHandler = function(){
 		removeDialog();
 		removeGame();
@@ -1465,6 +1491,45 @@ function Dialog(){
 		removeDialog();
 		removeGame();
 		initMenu();
+	}
+	
+	this.btnYesHandler = function(){
+		rightColorRightPlace = 0;
+		stopTimer();
+		if(numberOfGames == ''){
+			removeDialog();
+			removeGame();
+			initMenu();
+		} else {
+			removeDialog();
+			dialog.render();
+		}
+	}
+	
+	this.btnYesHandlerNormal = function(){
+		removeDialog();
+		localStorage.removeItem('hsWinsNormal');
+		localStorage.removeItem('hsGamesNormal');
+		localStorage.removeItem('hsTriesNormal');
+		localStorage.removeItem('hsMinutesNormal');
+		localStorage.removeItem('hsSecondsNormal');
+		btnHighscoreHandler();
+		highlightButton(document.getElementById('btnHighscore'));
+	}
+	
+	this.btnYesHandlerMaster = function(){
+		removeDialog();
+		localStorage.removeItem('hsWinsMaster');
+		localStorage.removeItem('hsGamesMaster');
+		localStorage.removeItem('hsTriesMaster');
+		localStorage.removeItem('hsMinutesMaster');
+		localStorage.removeItem('hsSecondsMaster');
+		btnHighscoreHandler();
+		highlightButton(document.getElementById('btnHighscore'));
+	}
+	
+	this.btnNoHandler = function(){
+		removeDialog();
 	}
 }
 
@@ -1612,6 +1677,9 @@ function removeManualHighscoreText(){
 function removeCodeSelect(){
 	while(divCodeSelect.firstChild){
 		divCodeSelect.removeChild(divCodeSelect.firstChild);
+	}
+	while(divCodeColorsInfo.firstChild){
+		divCodeColorsInfo.removeChild(divCodeColorsInfo.firstChild);
 	}
 }
 
