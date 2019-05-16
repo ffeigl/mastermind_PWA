@@ -243,11 +243,15 @@ function btnHighscoreHandler(){
 }
 
 function btnResetHighscoreNormalHandler(){
-	dialog.renderAcknowledge('normal');
+	if(hsGamesNormal != 0){
+		dialog.renderAcknowledge('normal');
+	}
 }
 
 function btnResetHighscoreMasterHandler(){
-	dialog.renderAcknowledge('master');
+	if(hsGamesMaster != 0){
+		dialog.renderAcknowledge('master');
+	}
 }
 
 function btnGameStartHandler(){
@@ -736,6 +740,7 @@ function generateTable() {
 
     for (var j = 0; j < columns+2; j++) {
 		var td = document.createElement('TD');
+		td.style.border = '1px solid grey';
 		if(j == 0){
 			td.width = '15';
 			td.className = 'number';
@@ -744,8 +749,7 @@ function generateTable() {
 		} else {
 			if(j == columns+1){
 				var solutionTable = document.createElement('TABLE');
-				solutionTable.border = '1';
-			  
+				solutionTable.border = '0';
 				var solutionTableBody = document.createElement('TBODY');
 				solutionTable.appendChild(solutionTableBody);
 				
@@ -756,6 +760,7 @@ function generateTable() {
 						var solutionTD = document.createElement('TD');
 						solutionTD.width = '8';
 						solutionTD.height = '30';
+						solutionTD.style.border = '1px solid black';
 						solutionTD.id = 'solution' + i + k;
 						solutionRow.appendChild(solutionTD);
 					}
@@ -763,6 +768,7 @@ function generateTable() {
 			} else {
 				td.className = 'passive';
 				td.width = '50';
+				
 				td.height = '30';
 				td.oncontextmenu = 'return false';
 			}
@@ -1497,6 +1503,7 @@ function Dialog(){
 		rightColorRightPlace = 0;
 		stopTimer();
 		if(numberOfGames == ''){
+			setHighscore('Loss');
 			removeDialog();
 			removeGame();
 			initMenu();

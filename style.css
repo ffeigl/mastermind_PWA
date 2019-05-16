@@ -25,6 +25,10 @@ input{
 	font-weight: bold;
 	width: 15px;
 	height: 30px;
+	border: 1px solid black;
+}
+#gameTable{
+	border: 0;
 }
 
 .eingabe{
