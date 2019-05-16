@@ -768,7 +768,6 @@ function generateTable() {
 			} else {
 				td.className = 'passive';
 				td.width = '50';
-				
 				td.height = '30';
 				td.oncontextmenu = 'return false';
 			}
