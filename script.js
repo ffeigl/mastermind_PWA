@@ -4,6 +4,8 @@
 
 // Initialize
 function initMenu(){
+	removeBackgrounds();
+	
 	setTwoPlayerToZero();
 	generateGameModeButtons();
 	generateManualHighscoreButtons();
@@ -127,7 +129,7 @@ function generateGameStartButton(){
 	btnGameStart.value = 'Start';
 	btnGameStart.onclick = btnGameStartHandler;
 	btnGameStart.id = 'btnGameStart';
-	btnGameStart.className = 'btnMenu';
+	btnGameStart.className = 'btnMenu highlightButtons';
 	
 	divGameStartButton.appendChild(btnGameStart);
 }
@@ -162,7 +164,8 @@ function btnSinglePlayerHandler(){
 	generateGameModeSelect();
 	generateGameStartButton();
 	
-	divGameModeInfoDiv.style.border = '2px solid #595959';
+	divGameModeInfoDiv.style.border = '5px solid transparent';
+	divGameModeInfoDiv.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
 }
 
 function btnTwoPlayerHandler(){
@@ -179,7 +182,8 @@ function btnTwoPlayerHandler(){
 	generateRoundsSelect();
 	generateGameStartButton();
 	
-	divGameModeInfoDiv.style.border = '2px solid #595959';
+	divGameModeInfoDiv.style.border = '5px solid transparent';
+	divGameModeInfoDiv.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
 }
 
 function rdoNormalHandler(){
@@ -270,9 +274,10 @@ function generateManual(){
 	
 	divManual.style.overflow = 'auto';
 	divManual.style.height = '250px';
-	divManual.style.width = '286px';
-	divManual.style.background = '#ffcc80';
-	divManual.style.border = '2px solid #595959';
+	divManual.style.width = '280px';
+	divManual.style.backgroundImage = 'url("./Images/Hintergrund_Papier.jpg")';
+	divManual.style.border = '5px solid transparent';
+	divManual.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
 	divManual.style.paddingLeft = '5px';
 	divManual.style.paddingRight = '5px';
 	
@@ -413,7 +418,7 @@ function getHighscores(){
 
 function generateHighscores(){
 	var tableHighscore = document.createElement('TABLE');
-	tableHighscore.width = '300px';
+	tableHighscore.style.width = '300px';
 	tableHighscore.style.textAlign = 'center';
 	var tblBodyHighscore = document.createElement('TBODY');
 	tableHighscore.appendChild(tblBodyHighscore);
@@ -518,14 +523,14 @@ function generateHighscores(){
 	var btnNormalReset = document.createElement('INPUT');
 	btnNormalReset.type = 'button';
 	btnNormalReset.value = '\u274c';
-	btnNormalReset.className = 'resetHighscore';
+	btnNormalReset.className = 'resetHighscore highlightButtons';
 	btnNormalReset.onclick = btnResetHighscoreNormalHandler;
 	tdHighscore41.appendChild(btnNormalReset);
 	
 	var btnMasterReset = document.createElement('INPUT');
 	btnMasterReset.type = 'button';
 	btnMasterReset.value = '\u274c';
-	btnMasterReset.className = 'resetHighscore';
+	btnMasterReset.className = 'resetHighscore highlightButtons';
 	btnMasterReset.onclick = btnResetHighscoreMasterHandler;
 	tdHighscore42.appendChild(btnMasterReset);
 	
@@ -535,7 +540,8 @@ function generateHighscores(){
 
 	divManualHighscoreText.appendChild(tableHighscore);
 	
-	divManualHighscoreText.style.border = '2px solid #595959';
+	divManualHighscoreText.style.border = '5px solid transparent';
+	divManualHighscoreText.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
 	
 }
 
@@ -556,6 +562,10 @@ function highlightButton(button){
 
 // Initialize
 function initCodeSelect(){
+	removeBackgrounds();
+	
+	generateCodeBackground();
+	
 	if(currentGame == 0){
 		currentGame = 1;
 	} else {
@@ -569,9 +579,25 @@ function initCodeSelect(){
 	assignClickHandler();
 }
 
+function generateCodeBackground(){
+	if(columns == 4){
+		divCode.style.width = '242px';
+		divCode.style.height = '155px';
+		divCode.style.backgroundImage = 'url("./Images/Codeselect_Normal.jpg")';
+		divCode.style.backgroundSize = 'cover';
+	} else {
+		divCode.style.width = '302px';
+		divCode.style.height = '155px';
+		divCode.style.backgroundImage = 'url("./Images/Codeselect_Master.jpg")';
+		divCode.style.backgroundSize = 'cover';
+	}
+}
+
 function generateCodeSelectTable(){
 	var divGameNr = document.createElement('DIV');
+	divGameNr.style.color = 'white';
 	var divPlayerNr = document.createElement('DIV');
+	divPlayerNr.style.color = 'white';
 	currentPlayer = currentGame % 2;
 	if(currentPlayer == 0){
 		currentPlayer = 2;
@@ -579,15 +605,15 @@ function generateCodeSelectTable(){
 		currentPlayer = 1;
 	}
 	
-	divGameNr.innerHTML = 'Runde <b>' + currentGame + '</b> / ' + numberOfGames;
-	divPlayerNr.innerHTML = 'Kombinationsauswahl: <b>Spieler ' + currentPlayer + '</b>';
+	divGameNr.innerHTML = '\xa0\xa0\xa0 Runde <b>' + currentGame + '</b> / ' + numberOfGames;
+	divPlayerNr.innerHTML = '\xa0\xa0\xa0 Kombinationsauswahl: <b>Spieler ' + currentPlayer + '</b>';
 	
 	divCodeSelect.appendChild(divGameNr);
 	divCodeSelect.appendChild(divPlayerNr);
 	divCodeSelect.appendChild(divCodeColorsInfo);
 
 	var table = document.createElement('TABLE');
-	table.border = 1;
+	table.border = 0;
 	table.id = 'codeSelectTable';
 	var tableBody = document.createElement('TBODY');
 	table.appendChild(tableBody);
@@ -598,6 +624,7 @@ function generateCodeSelectTable(){
 		var td = document.createElement('TD');
 		td.width = '53.6';
 		td.height = '42.8';
+		td.style.border = '2px solid transparent';
 		td.className = 'active';
 		trCustomCode.appendChild(td);
 	}
@@ -635,6 +662,8 @@ function generateCodeSelectButton(){
 	button.type = 'button';
 	button.value = 'Kombination setzen';
 	button.style.width = document.getElementById('codeSelectTable').offsetWidth + 'px';
+	button.style.height = '25px';
+	button.className = 'highlightButtons';
 	button.onclick = btnSetCodeHandler;
 	
 	divCodeSelect.appendChild(button);
@@ -642,7 +671,7 @@ function generateCodeSelectButton(){
 
 function generateCodeErrorMessage(){
 	divCodeErrorMessage.innerHTML = '';
-	divCodeErrorMessage.style.color = 'red';
+	divCodeErrorMessage.style.color = 'white';
 	
 	divCodeSelect.appendChild(divCodeErrorMessage);
 }
@@ -675,7 +704,7 @@ function setCustomCode(){
 }
 
 function showCodeErrorMessage(errorMessage){
-	divCodeErrorMessage.innerHTML = errorMessage;
+	divCodeErrorMessage.innerHTML = '\xa0\xa0\xa0 <b>' + errorMessage + '</b>';
 }
 
 // **********
@@ -684,6 +713,9 @@ function showCodeErrorMessage(errorMessage){
 
 // Initialize
 function initGame(){
+	removeBackgrounds();
+	
+	generateGameBackground();
 	generateTable();
 	generateBtnCheck();
 	generateGameErrorMessage();
@@ -695,15 +727,44 @@ function initGame(){
 	} else {
 		generateGameInfo();
 	}
-	codeAusgeben();
 	activateCurrentRow();
 	
 	startTimer();
 }
 
+function generateGameBackground(){
+	if(numberOfGames == ''){
+		if(columns == 4){
+			divGame.style.height = '420px';
+			divGame.style.width = '350px';
+			divGame.style.backgroundImage = 'url("./Images/Spielfeld_single_normal.jpg")';
+			divGame.style.backgroundSize = 'cover';
+		} else {
+			divGame.style.height = '595px';
+			divGame.style.width = '420px';
+			divGame.style.backgroundImage = 'url("./Images/Spielfeld_single_master.jpg")';
+			divGame.style.backgroundSize = 'cover';
+		}
+	} else {
+		if(columns == 4){
+			divGame.style.height = '455px';
+			divGame.style.width = '350px';
+			divGame.style.backgroundImage = 'url("./Images/Spielfeld_two_normal.jpg")';
+			divGame.style.backgroundSize = 'cover';
+		} else {
+			divGame.style.height = '630px';
+			divGame.style.width = '420px';
+			divGame.style.backgroundImage = 'url("./Images/Spielfeld_two_master.jpg")';
+			divGame.style.backgroundSize = 'cover';
+		}
+	}
+}
+
 function generateGameInfo(){
 	var divGameNr = document.createElement('DIV');
+	divGameNr.style.color = 'white';
 	var divPlayerNr = document.createElement('DIV');
+	divPlayerNr.style.color = 'white';
 	currentPlayer = currentGame % 2;
 	if(currentPlayer == 0){
 		currentPlayer = 1;
@@ -711,21 +772,23 @@ function generateGameInfo(){
 		currentPlayer = 2;
 	}
 	
-	divGameNr.innerHTML = 'Runde <b>' + currentGame + '</b> / ' + numberOfGames;
-	divPlayerNr.innerHTML = '<b>Spieler ' + currentPlayer + '</b>';
+	divGameNr.innerHTML = '\xa0\xa0\xa0 Runde <b>' + currentGame + '</b> / ' + numberOfGames;
+	divPlayerNr.innerHTML = '\xa0\xa0\xa0 <b>Spieler ' + currentPlayer + '</b>';
 	
 	divCurrentPlayer.appendChild(divGameNr);
 	divCurrentPlayer.appendChild(divPlayerNr);
 }
 
 function generateTable() {
-  var table = document.createElement('TABLE');
-  divTable.className = 'table';
-  table.border = '1';
-  table.id = 'gameTable';
+	divSolution.style.height = '25px';
+	
+	var table = document.createElement('TABLE');
+	divTable.className = 'table';
+	table.border = '1';
+	table.id = 'gameTable';
 
-  var tableBody = document.createElement('TBODY');
-  table.appendChild(tableBody);
+	var tableBody = document.createElement('TBODY');
+	table.appendChild(tableBody);
 
 	if(rows == 8){
 		rowsArray = [0,0,0,0,0,0,0,0];
@@ -740,7 +803,8 @@ function generateTable() {
 
     for (var j = 0; j < columns+2; j++) {
 		var td = document.createElement('TD');
-		td.style.border = '1px solid grey';
+		td.style.border = '1px solid transparent';
+		//td.style.backgroundColor = 'white';
 		if(j == 0){
 			td.width = '15';
 			td.className = 'number';
@@ -760,7 +824,7 @@ function generateTable() {
 						var solutionTD = document.createElement('TD');
 						solutionTD.width = '8';
 						solutionTD.height = '30';
-						solutionTD.style.border = '1px solid black';
+						solutionTD.style.border = '1px solid transparent';
 						solutionTD.id = 'solution' + i + k;
 						solutionRow.appendChild(solutionTD);
 					}
@@ -807,7 +871,10 @@ function generateBtnCheck(){
 	var btnCheck = document.createElement('INPUT');
 	btnCheck.type = 'button';
 	btnCheck.value = 'Überprüfen';
-	btnCheck.style.width = document.getElementById('gameTable').offsetWidth*0.75 + 'px';
+	btnCheck.style.width = document.getElementById('gameTable').offsetWidth*0.70-10 + 'px';
+	btnCheck.style.height = '25px';
+	btnCheck.style.marginRight = '10px';
+	btnCheck.className = 'highlightButtons';
 	btnCheck.onclick = btnCheckHandler;
 	
 	divTable.appendChild(btnCheck);
@@ -815,7 +882,10 @@ function generateBtnCheck(){
 	var btnSurrender = document.createElement('INPUT');
 	btnSurrender.type = 'button';
 	btnSurrender.value = 'Aufgeben';
-	btnSurrender.style.width = document.getElementById('gameTable').offsetWidth*0.25 + 'px';
+	btnSurrender.style.width = document.getElementById('gameTable').offsetWidth*0.30-10 + 'px';
+	btnSurrender.style.marginRight = '10px';
+	btnSurrender.style.height = '25px';
+	btnSurrender.className = 'highlightButtons';
 	btnSurrender.onclick = btnSurrenderHandler;
 	
 	divTable.appendChild(btnSurrender);
@@ -830,7 +900,7 @@ function generateBtnCheck(){
 
 function generateGameErrorMessage(){
 	divGameError.innerHTML = "";
-	divGameError.style.color = 'red';
+	divGameError.style.color = 'white';
 	
 	divTable.appendChild(divGameError);
 }
@@ -891,34 +961,28 @@ function convertNumbersToColors(){
 function assignColor(i){
 	switch(i){
 		case 0:
-			return 'red';
+			return 'rgb(240, 2, 2)'; //RED
 			break;
 		case 1:
-			return 'blue';
+			return 'rgb(2, 63, 240)'; //BLUE
 			break;
 		case 2:
-			return 'green';
+			return 'rgb(15, 255, 0)'; //GREEN
 			break;
 		case 3:
-			return 'yellow';
+			return 'rgb(255, 255, 0)'; //YELLOW
 			break;
 		case 4:
-			return 'black';
+			return 'rgb(0, 0, 0)'; //BLACK
 			break;
 		case 5:
-			return 'grey';
+			return 'rgb(155, 89, 182)'; //PURPLE
 			break;
 		case 6:
-			return 'pink';
+			return 'rgb(255, 65, 150)'; //PINK
 			break;
 		case 7:
-			return 'brown';
-	}
-}
-
-function codeAusgeben(){
-	for(var i = 0; i < code.length; i++){
-		console.log(code[i]);
+			return 'rgb(243, 125, 18)'; //ORANGE
 	}
 }
 
@@ -934,7 +998,7 @@ function activateCurrentRow(){
 function deactivateAllRows(){
 	for (var i = 0; i < rows; i++) {
 		for (var j = 1; j < columns+1; j++) {
-			rowsArray[i].childNodes[0].style.backgroundColor = 'white';
+			rowsArray[i].childNodes[0].style.backgroundColor = '';
 			rowsArray[i].childNodes[j].className = 'passive';
 		}
 	}
@@ -1026,74 +1090,74 @@ function btnSurrenderHandler(){
 // Methoden für Eventhandler
 function colorSwitch(color){
 	switch(color){
-		case 'red':
-			return 'blue';
+		case 'rgb(240, 2, 2)':			//RED
+			return 'rgb(2, 63, 240)';	//BLUE
 			break;
-		case 'blue':
-			return 'green';
+		case 'rgb(2, 63, 240)':		//BLUE
+			return 'rgb(15, 255, 0)';	//GREEN
 			break;
-		case 'green':
-			return 'yellow';
+		case 'rgb(15, 255, 0)':		//GREEN
+			return 'rgb(255, 255, 0)';//YELLOW
 			break;
-		case 'yellow':
-			return 'black';
+		case 'rgb(255, 255, 0)':		//YELLOW
+			return 'rgb(0, 0, 0)';	//BLACK
 			break;
-		case 'black':
-			return 'grey';
+		case 'rgb(0, 0, 0)':		//BLACK
+			return 'rgb(155, 89, 182)';	//PURPLE
 			break;
-		case 'grey':
+		case 'rgb(155, 89, 182)':		//PURPLE
 			if(colors == 6){
-				return 'red';
+				return 'rgb(240, 2, 2)';//RED
 			}else{
-				return 'pink';
+				return 'rgb(255, 65, 150)';//PINK
 			}
 			break;
-		case 'pink':
-			return 'brown';
+		case 'rgb(255, 65, 150)':		//PINK
+			return 'rgb(243, 125, 18)';	//ORANGE
 			break;
-		case 'brown':
-			return 'red';
+		case 'rgb(243, 125, 18)':		//ORANGE
+			return 'rgb(240, 2, 2)';	//RED
 			break;
 		default:
-			return 'red';
+			return 'rgb(240, 2, 2)';	//RED
 	}
 }
 
 function reverseColorSwitch(color){
 	switch(color){
-		case 'red':
+		case 'rgb(240, 2, 2)':			//RED
 			if(colors == 6){
-				return 'grey';
+				return 'rgb(155, 89, 182)';//PURPLE
 			}else{
-				return 'brown';
+				return 'rgb(243, 125, 18)';//ORANGE
 			}
 			break;
-		case 'blue':
-			return 'red';
+		case 'rgb(2, 63, 240)':		//BLUE
+			return 'rgb(240, 2, 2)';	//RED
 			break;
-		case 'green':
-			return 'blue';
+		case 'rgb(15, 255, 0)':		//GREEN
+			return 'rgb(2, 63, 240)';	//BLUE
 			break;
-		case 'yellow':
-			return 'green';
+		case 'rgb(255, 255, 0)':		//YELLOW
+			return 'rgb(15, 255, 0)';	//GREEN
 			break;
-		case 'black':
-			return 'yellow';
+		case 'rgb(0, 0, 0)':		//BLACK
+			return 'rgb(255, 255, 0)';//YELLOW
 			break;
-		case 'grey':
-			return 'black'
+		case 'rgb(155, 89, 182)':		//PURPLE
+			return 'rgb(0, 0, 0)';	//BLACK
 			break;
-		case 'pink':
-			return 'grey';
+		case 'rgb(255, 65, 150)':		//PINK
+			return 'rgb(155, 89, 182)';	//PURPLE
 			break;
-		case 'brown':
-			return 'pink';
+		case 'rgb(243, 125, 18)':		//ORANGE
+			return 'rgb(255, 65, 150)';	//PINK
 			break;
 		default:
 			if(colors == 6){
-				return 'grey';
+				return 'rgb(155, 89, 182)';	//PURPLE
 			}else{
-				return 'brown';
+				return 'rgb(243, 125, 18)';	//ORANGE
 			}
 	}
 }
@@ -1110,13 +1174,13 @@ function checkEmpty(row, string){
 	}
 	
 	for (var i = j; i < k; i++) {
-		row.childNodes[i].style.borderColor = '';
+		row.childNodes[i].style.borderColor = 'transparent';
 	}
 	
 	var emptyTDs = 0;
 	for (var i = j; i < k; i++) {
 		if(row.childNodes[i].style.backgroundColor == ''){
-			row.childNodes[i].style.borderColor = 'red';
+			row.childNodes[i].style.borderColor = 'white';
 			emptyTDs++;
 		}
 	}
@@ -1142,8 +1206,8 @@ function checkDoubles(row, string){
 	for (var i = k; i < l-1; i++) {
 		for (var j = i+1; j < l; j++){
 			if(row.childNodes[i].style.backgroundColor == row.childNodes[j].style.backgroundColor){
-				row.childNodes[i].style.borderColor = 'red';
-				row.childNodes[j].style.borderColor = 'red';
+				row.childNodes[i].style.borderColor = 'white';
+				row.childNodes[j].style.borderColor = 'white';
 				doubleTDs++;
 			}
 		}
@@ -1186,7 +1250,7 @@ function fillSolutionTable(rightColorRightPlace, rightColor){
 }
 
 function showGameErrorMessage(errorMessage){
-	divGameError.innerHTML = errorMessage;
+	divGameError.innerHTML = '\xa0\xa0\xa0 <b>' + errorMessage + '</b>';
 }
 
 function setHighscore(score){
@@ -1325,12 +1389,14 @@ function Dialog(){
 		divDialogBox.style.left = (winW/2) - (300 * .5)+'px';
 		divDialogBox.style.top = '150px';
 		divDialogBox.style.display = 'block';
+		dialogBoxHead.style.color = 'white';
 		
 		var triesNeeded = rows-currentRow;
 		
 		if(string != 'Score'){
 			var btnNewNextScore = document.createElement('INPUT');
 			btnNewNextScore.type = 'button';
+			btnNewNextScore.className = 'highlightButtons';
 			
 			if(numberOfGames == '' || numberOfGames != currentGame){
 				if(numberOfGames == ''){
@@ -1344,6 +1410,7 @@ function Dialog(){
 			}
 			
 			btnNewNextScore.onclick = dialog.btnNewNextHandler;
+			btnNewNextScore.style.marginRight = '10px';
 			dialogBoxFoot.appendChild(btnNewNextScore);
 		
 			var dialogBodyBoxText = '<b>Benötigte Zeit:</b> <br \>' + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
@@ -1435,6 +1502,7 @@ function Dialog(){
 		var btnMenu = document.createElement('INPUT');
 		btnMenu.type = 'button';
 		btnMenu.value = 'Menü';
+		btnMenu.className = 'highlightButtons';
 		btnMenu.onclick = dialog.btnMenuHandler;
 		
 		dialogBoxFoot.appendChild(btnMenu);
@@ -1457,6 +1525,8 @@ function Dialog(){
 		var btnYes = document.createElement('INPUT');
 		btnYes.type = 'button';
 		btnYes.value = 'Ja';
+		btnYes.style.marginRight = '10px';
+		btnYes.className = 'highlightButtons';
 		switch(test){
 			case 'normal':
 				btnYes.onclick = dialog.btnYesHandlerNormal;
@@ -1472,6 +1542,7 @@ function Dialog(){
 		var btnNo = document.createElement('INPUT');
 		btnNo.type = 'button';
 		btnNo.value = 'Nein';
+		btnNo.className = 'highlightButtons';
 		btnNo.onclick = dialog.btnNoHandler;
 		
 		dialogBoxFoot.appendChild(btnNo);
@@ -1507,6 +1578,7 @@ function Dialog(){
 			removeGame();
 			initMenu();
 		} else {
+			currentRow = 0;
 			removeDialog();
 			dialog.render();
 		}
@@ -1748,6 +1820,17 @@ function removeDialogBoxFoot(){
 	}
 }
 
+// Background
+function removeBackgrounds(){
+	divGame.style.backgroundImage = '';
+	divGame.style.height = '';
+	divGame.style.width = '';
+	
+	divCode.style.width = '';
+	divCode.style.height = '';
+	divCode.style.background = '';
+}
+
 // START
 var divGameModeButtons = document.getElementById('gameModeButtons');
 var divGameModeInfoDiv = document.getElementById('gameModeInfoDiv');
@@ -1760,11 +1843,13 @@ var divManualHighscoreText = document.getElementById('manualHighscoreText');
 
 var roundsSelect = document.createElement('SELECT');
 
+var divCode = document.getElementById('code');
 var divCodeColorsInfo = document.createElement('DIV');
 var divCodeSelect = document.getElementById('codeSelect');
 var divCodeErrorMessage = document.getElementById('codeErrorMessage');
 var trCustomCode;
 
+var divGame = document.getElementById('game');
 var divCurrentPlayer = document.getElementById('currentPlayer');
 var divSolution = document.getElementById('solution');
 var divTable = document.getElementById('table');
