@@ -1,7 +1,7 @@
 input{
 	font-family: Arial;
 	font-weight: bold;
-	background-image: url("./Images/Hintergrund.jpg");
+	background-image: url("./Images/Background_1.jpg");
 	border-color: #a07459;
 	border-style: inline;
 }
@@ -17,7 +17,7 @@ input{
 }
 
 .highlightButtons{
-	background-image: url("./Images/Hintergrund_2.jpg");
+	background-image: url("./Images/Background_2.jpg");
 	border-color: #3a1000;
 	color: white;
 }
@@ -84,12 +84,12 @@ input{
 
 #manualHighscoreText{
 	width: 290px;
-	background-image: url("./Images/Hintergrund_Papier.jpg");
+	background-image: url("./Images/Background_Paper.jpg");
 }
 
 #gameModeInfoDiv{
 	width: 290px;
-	background-image: url("./Images/Hintergrund_Papier.jpg");
+	background-image: url("./Images/Background_Paper.jpg");
 }
 
 #dialogOverlay{
@@ -106,7 +106,7 @@ input{
 #dialogBox{
 	display: none;
 	position: fixed;
-	background-image: url("./Images/Hintergrund.jpg");
+	background-image: url("./Images/Background_1.jpg");
 	border-radius: 7px;
 	width: 300px;
 	z-index: 10;
@@ -124,12 +124,12 @@ input{
 
 #dialogBox > div > #dialogBoxBody{
 	padding: 20px;
-	background-image: url("./Images/Hintergrund_Papier.jpg");
+	background-image: url("./Images/Background_Paper.jpg");
 	text-align: center;
 }
 
 #dialogBox > div > #dialogBoxFoot{
 	padding: 10px;
 	text-align: right;
-	background-image: url("./Images/Hintergrund_Papier.jpg");
+	background-image: url("./Images/Background_Paper.jpg");
 }

@@ -165,7 +165,7 @@ function btnSinglePlayerHandler(){
 	generateGameStartButton();
 	
 	divGameModeInfoDiv.style.border = '5px solid transparent';
-	divGameModeInfoDiv.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
+	divGameModeInfoDiv.style.borderImage = 'url("./Images/Background_2.jpg") 20% round';
 }
 
 function btnTwoPlayerHandler(){
@@ -183,7 +183,7 @@ function btnTwoPlayerHandler(){
 	generateGameStartButton();
 	
 	divGameModeInfoDiv.style.border = '5px solid transparent';
-	divGameModeInfoDiv.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
+	divGameModeInfoDiv.style.borderImage = 'url("./Images/Background_2.jpg") 20% round';
 }
 
 function rdoNormalHandler(){
@@ -275,9 +275,9 @@ function generateManual(){
 	divManual.style.overflow = 'auto';
 	divManual.style.height = '250px';
 	divManual.style.width = '280px';
-	divManual.style.backgroundImage = 'url("./Images/Hintergrund_Papier.jpg")';
+	divManual.style.backgroundImage = 'url("./Images/Background_Paper.jpg")';
 	divManual.style.border = '5px solid transparent';
-	divManual.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
+	divManual.style.borderImage = 'url("./Images/Background_2.jpg") 20% round';
 	divManual.style.paddingLeft = '5px';
 	divManual.style.paddingRight = '5px';
 	
@@ -541,7 +541,7 @@ function generateHighscores(){
 	divManualHighscoreText.appendChild(tableHighscore);
 	
 	divManualHighscoreText.style.border = '5px solid transparent';
-	divManualHighscoreText.style.borderImage = 'url("./Images/Hintergrund_2.jpg") 20% round';
+	divManualHighscoreText.style.borderImage = 'url("./Images/Background_2.jpg") 20% round';
 	
 }
 
@@ -737,24 +737,24 @@ function generateGameBackground(){
 		if(columns == 4){
 			divGame.style.height = '420px';
 			divGame.style.width = '350px';
-			divGame.style.backgroundImage = 'url("./Images/Spielfeld_single_normal.jpg")';
+			divGame.style.backgroundImage = 'url("./Images/Board_Single_Normal.jpg")';
 			divGame.style.backgroundSize = 'cover';
 		} else {
 			divGame.style.height = '595px';
 			divGame.style.width = '420px';
-			divGame.style.backgroundImage = 'url("./Images/Spielfeld_single_master.jpg")';
+			divGame.style.backgroundImage = 'url("./Images/Board_Single_Master.jpg")';
 			divGame.style.backgroundSize = 'cover';
 		}
 	} else {
 		if(columns == 4){
 			divGame.style.height = '455px';
 			divGame.style.width = '350px';
-			divGame.style.backgroundImage = 'url("./Images/Spielfeld_two_normal.jpg")';
+			divGame.style.backgroundImage = 'url("./Images/Board_Two_Normal.jpg")';
 			divGame.style.backgroundSize = 'cover';
 		} else {
 			divGame.style.height = '630px';
 			divGame.style.width = '420px';
-			divGame.style.backgroundImage = 'url("./Images/Spielfeld_two_master.jpg")';
+			divGame.style.backgroundImage = 'url("./Images/Board_Two_Master.jpg")';
 			divGame.style.backgroundSize = 'cover';
 		}
 	}
