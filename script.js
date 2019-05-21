@@ -1387,7 +1387,7 @@ function Dialog(){
 		divDialogOverlay.style.display = 'block';
 		divDialogOverlay.style.height = winH+'px';
 		divDialogBox.style.left = (winW/2) - (300 * .5)+'px';
-		divDialogBox.style.top = '150px';
+		divDialogBox.style.top = (winH/2) - (150 * .5) +'px';
 		divDialogBox.style.display = 'block';
 		dialogBoxHead.style.color = 'white';
 		
@@ -1517,7 +1517,7 @@ function Dialog(){
 		divDialogOverlay.style.display = 'block';
 		divDialogOverlay.style.height = winH+'px';
 		divDialogBox.style.left = (winW/2) - (300 * .5)+'px';
-		divDialogBox.style.top = '150px';
+		divDialogBox.style.top = (winH/2) - (150 * .5) +'px';
 		divDialogBox.style.display = 'block';
 		
 		dialogBoxBody.innerHTML = 'Sind Sie sicher?';
